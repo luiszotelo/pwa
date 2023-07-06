@@ -40,7 +40,7 @@ const MapBox = () => {
       });
     new Marker()
       .setLngLat(map.current.getCenter())
-      .addTo(map)
+      .addTo(map.current)
   }, [latitude,longitude])
 
 

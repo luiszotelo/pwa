@@ -50,6 +50,28 @@ class Firabase {
       console.error("Error updating document: ", e);
     }
   }
+
+
+  obtenerDocumentoPorID =  async  (documentoID, callback) => {
+    const documentRef = await doc(this.db, "service", documentoID);
+
+    const unsubscribe = await onSnapshot(documentRef, (doc) => {
+      if (doc.exists()) {
+        const datos = doc.data();
+
+        // Llama al callback y pasa los datos del documento
+        callback(datos);
+      } else {
+        console.log("El documento no existe.");
+      }
+    });
+
+    return unsubscribe;
+  };
+
+
+
+
 }
 
 

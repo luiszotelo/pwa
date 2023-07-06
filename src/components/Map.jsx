@@ -6,6 +6,7 @@ import { ServiceTrack } from "../firabase/models/serviceTrack.js";
 const MapBox = () => {
   const [latitude, setLatitude] = useState(19.3644163);
   const [longitude, setLongitude] = useState(-99.1883323);
+  const [arregloOfDb, setArregloOfDb] = useState([]); // [{}
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
   const map = useRef(null);
@@ -68,14 +69,13 @@ const MapBox = () => {
   }, [latitude, longitude])
 
 
-/*
   useEffect(() => {
-      setInterval(()=> {
-        console.log('latitude', latitude)
-        fbm.updatePoints('eFQ1vlnd2rXZd0BxiDuW',{latitude: latitude, longitude: longitude} )
-      },30000)
+    fbm.obtenerDocumentoPorID('6YgY9uQRK32YdVZ5KjJB',  (call) => {
+      setArregloOfDb(call.trajectory.at(-1).length)
+      // setLatitude(call.data().latitude)
+      // setLongitude(call.data().longitude)
+    })
   }, []);
-*/
 
 
   useEffect(() => {
@@ -102,6 +102,7 @@ const MapBox = () => {
       <br />
       <button onClick={onClick}>Crear Servicio</button>
       <button onClick={updateMarker}>Actualizar</button>
+      {arregloOfDb}
     </>
   );
 };

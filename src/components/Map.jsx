@@ -6,7 +6,7 @@ const MapBox = () => {
   const [longitude, setLongitude] = useState(null);
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
-  let map = useRef(null);
+  const map = useRef(null);
 
   useEffect(() => {
     const trackLocation = () => {
@@ -32,7 +32,7 @@ const MapBox = () => {
 
   useLayoutEffect(() => {
       mapboxgl.accessToken = 'pk.eyJ1Ijoiem9tYXByb2plY3QiLCJhIjoiY2xqbTlpNmhwMHVwODNjcTl0czh5dnoyeCJ9.zRqxzA3XPV4MIHkawlunwg';
-      map = new Map({
+      map.current = new Map({
         container: mapRef.current, // container ID
         style: 'mapbox://styles/mapbox/streets-v12', // style URL
         center: [longitude, latitude], // starting position [lng, lat]

@@ -39,7 +39,7 @@ const MapBox = () => {
         zoom: 15 // starting zoom
       });
     new Marker()
-      .setLngLat(map.getCenter())
+      .setLngLat(map.current.getCenter())
       .addTo(map)
   }, [latitude,longitude])
 

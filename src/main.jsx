@@ -7,7 +7,6 @@ import MapProveedor from "./components/MapProveedor.jsx";
 import 'antd/dist/reset.css'
 import MapCliente from "./components/MapCliente.jsx";
 ReactDOM.createRoot(document.getElementById('root')).render(
-<React.StrictMode>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -17,5 +16,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           </Route>
         </Routes>
       </BrowserRouter>
-    </React.StrictMode>
 )

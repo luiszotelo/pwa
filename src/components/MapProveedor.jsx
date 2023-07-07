@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 const MapProveedor = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [positionClient, setPositionClient] = useState([0, 0]); // [lng, lat
+  const [positionFinal, setPositionFinal] = useState([0, 0]); // [lng, lat
   const mapRef = useRef(null);
   const map = useRef(null);
   const marker = useRef(null);
@@ -17,6 +19,8 @@ const MapProveedor = () => {
       service => {
         setLatitude(service.positionProveedor[1])
         setLongitude(service.positionProveedor[0])
+        setPositionClient(service.positionClient)
+        setPositionFinal(service.positionFinal)
       }
     )
   }, [idService])
@@ -45,8 +49,9 @@ const MapProveedor = () => {
     trackLocation();
 
   }, [latitude, longitude])
-
+// crear el mapa
   useLayoutEffect(() => {
+    if(!positionClient[0]) return;
     if (!mapRef.current) return;
     mapboxgl.accessToken = 'pk.eyJ1Ijoiem9tYXByb2plY3QiLCJhIjoiY2xqbTlpNmhwMHVwODNjcTl0czh5dnoyeCJ9.zRqxzA3XPV4MIHkawlunwg';
     map.current = new Map({
@@ -55,7 +60,14 @@ const MapProveedor = () => {
       center: [longitude, latitude], // starting position [lng, lat]
       zoom: 15 // starting zoom
     });
-  }, [])
+       new Marker({ color: 'yellow' })
+       .setLngLat(positionClient)
+       .addTo(map.current)
+
+       new Marker({ color: 'red' })
+       .setLngLat(positionFinal)
+       .addTo(map.current)
+  }, [positionClient, positionFinal])
 
   useEffect(() => {
 
@@ -83,7 +95,7 @@ const MapProveedor = () => {
 useEffect(() => {
   setInterval(() => {
     updateMarker()
-  }, 300000)
+  }, 30000)
 },);
 
 

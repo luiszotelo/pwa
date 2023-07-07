@@ -2,16 +2,17 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout  from './components/Layout.jsx'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import MapBox from "./components/Map.jsx";
 import ConfirmTravel from "./components/ConfirmTravel.jsx";
+import MapProveedor from "./components/MapProveedor.jsx";
+import MapCliente from "./components/MapCliente.jsx";
 ReactDOM.createRoot(document.getElementById('root')).render(
 <React.StrictMode>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/confirm/:origin/:destiny" element={<ConfirmTravel />} />
-            <Route path="/travel/:idService" element={<MapBox />} />
+            <Route path="/travel/proveedor/:idService" element={<MapProveedor />} />
+            <Route path = "/travel/cliente/:idService" element={<MapCliente />} />
           </Route>
         </Routes>
       </BrowserRouter>

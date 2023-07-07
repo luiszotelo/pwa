@@ -39,7 +39,7 @@ function ConfirmTravel() {
   const onClick = () => {
     const service = new Service(2,2,[longitude,latitude ], origin, destiny)
     fbm.createService(service.toJSON()).then(
-      idService => navigate(`/travel/${idService}`)
+      idService => navigate(`/travel/proveedor/${idService}`)
     )
   }
 

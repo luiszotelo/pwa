@@ -1,9 +1,10 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet';
 import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import { fbm } from "../firabase/firabase.js";
 import { useParams } from "react-router-dom";
 
-const MapBox = () => {
+const MapProveedor = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const mapRef = useRef(null);
@@ -60,12 +61,12 @@ const MapBox = () => {
     if (!map.current) return;
 
 
-/*
-    setInterval(() => {
-      setLongitude(longitude + 0.001)
-      setLatitude((prev) => prev + 0.001);
-    }, 9000)
-*/
+
+  // setInterval(() => {
+  //   setLongitude(longitude + 0.001)
+  //   setLatitude((prev) => prev + 0.001);
+  // }, 30000)
+
 
     marker.current?.remove();
 
@@ -103,10 +104,13 @@ useEffect(() => {
 
   return (
     <>
+      <Helmet>
+        <title>Mapa Proveedor</title>
+    </Helmet>
       <div style={{height: '90vh', width: '90vw'}} ref={mapRef}>
       </div>
     </>
   );
 };
 
-export default MapBox;
+export default MapProveedor;

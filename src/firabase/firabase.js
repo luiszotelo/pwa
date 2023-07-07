@@ -26,7 +26,7 @@ class Firabase {
   async createService(data) {
     try {
       const docRef = await addDoc(collection(this.db, "service"), data);
-      console.log("Document written with ID: ", docRef.id);
+      return docRef.id
     } catch (e) {
       console.error("Error adding document: ", e);
     }

@@ -1,6 +1,6 @@
-export class ServiceTrack{
+export class Service {
   constructor(idServicio, idCliente,positionProveedor, positionClient, positionFinal ) {
-    this.idServicio = idServicio
+    this.idProveedor = idServicio
     this.idCliente = idCliente
     this.positionProveedor = positionProveedor
     this.positionClient = positionClient
@@ -9,12 +9,12 @@ export class ServiceTrack{
   }
   toJSON(){
     return {
-      idServicio: this.idServicio,
+      idServicio: this.idProveedor,
       idCliente: this.idCliente,
+      date:  new Date(),
       positionProveedor: this.positionProveedor,
       positionClient: this.positionClient,
       positionFinal: this.positionFinal,
-      date : new Date(),
       trajectory: []
     }
   }

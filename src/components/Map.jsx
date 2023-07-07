@@ -1,17 +1,27 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import { fbm } from "../firabase/firabase.js";
-import { ServiceTrack } from "../firabase/models/serviceTrack.js";
+import { useParams } from "react-router-dom";
 
 const MapBox = () => {
-  const [latitude, setLatitude] = useState(19.3644163);
-  const [longitude, setLongitude] = useState(-99.1883323);
-  const [arregloOfDb, setArregloOfDb] = useState([]); // [{}
-  const [error, setError] = useState(null);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const mapRef = useRef(null);
   const map = useRef(null);
   const marker = useRef(null);
+  const {idService} = useParams()
+  useEffect(() => {
+    fbm.getService(idService).then(
+      service => {
+        setLatitude(service.positionProveedor[1])
+        setLongitude(service.positionProveedor[0])
+      }
+    )
+  }, [idService])
 
+  /*
+     Obtiene en tiempo real la ubicación del usuario
+   */
   useEffect(() => {
     if (!map.current) return;
     const trackLocation = () => {
@@ -20,14 +30,13 @@ const MapBox = () => {
           (position) => {
             setLatitude(position.coords.latitude);
             setLongitude(position.coords.longitude);
-            setError(null);
           },
           (error) => {
-            setError(error.message);
+            console.log(error);
           }
         );
       } else {
-        setError('Geolocation is not supported by this browser.');
+        console.log("Geolocation is not supported by this browser.");
       }
     };
 
@@ -50,13 +59,13 @@ const MapBox = () => {
 
     if (!map.current) return;
 
-/*
-       setInterval(() => {
-         setLongitude(longitude+0.0001)
-         setLatitude((prev)=> prev + 0.0001);
-        }, 9000)
-*/
 
+/*
+    setInterval(() => {
+      setLongitude(longitude + 0.001)
+      setLatitude((prev) => prev + 0.001);
+    }, 9000)
+*/
 
     marker.current?.remove();
 
@@ -69,40 +78,33 @@ const MapBox = () => {
   }, [latitude, longitude])
 
 
-  useEffect(() => {
-    fbm.obtenerDocumentoPorID('6YgY9uQRK32YdVZ5KjJB',  (call) => {
-      setArregloOfDb(call.trajectory.at(-1).length)
-      // setLatitude(call.data().latitude)
-      // setLongitude(call.data().longitude)
-    })
-  }, []);
+  // useEffect(() => {
+  //   fbm.obtenerDocumentoPorID('6YgY9uQRK32YdVZ5KjJB',  (call) => {
+  //     setArregloOfDb(call.trajectory.at(-1).length)
+  //     // setLatitude(call.data().latitude)
+  //     // setLongitude(call.data().longitude)
+  //   })
+  // }, []);
 
 
-  useEffect(() => {
-    setInterval(()=> {
-      updateMarker()
-    },30000)
-  }, []);
+
+useEffect(() => {
+  setInterval(() => {
+    updateMarker()
+  }, 30000)
+},);
 
 
-    const onClick = () => {
-      fbm.createService(new ServiceTrack(1,2,[1,2],[1,2],[1,3]).toJSON())
-    }
 
-    const updateMarker = () => {
-      console.log({longitude})
-      fbm.updatePoints('6YgY9uQRK32YdVZ5KjJB',{latitude: latitude, longitude: longitude})
-    }
+  const updateMarker = () => {
+    console.log({longitude})
+    fbm.updatePoints(idService, {latitude: latitude, longitude: longitude})
+  }
 
   return (
     <>
       <div style={{height: '90vh', width: '90vw'}} ref={mapRef}>
       </div>
-      <br />
-      <br />
-      <button onClick={onClick}>Crear Servicio</button>
-      <button onClick={updateMarker}>Actualizar</button>
-      {arregloOfDb}
     </>
   );
 };

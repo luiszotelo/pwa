@@ -1,4 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import styles from '../styles/MapProveedor.module.css' 
 import { Helmet } from 'react-helmet';
 import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import { fbm } from "../firabase/firabase.js";
@@ -79,20 +80,10 @@ const MapProveedor = () => {
   }, [latitude, longitude])
 
 
-  // useEffect(() => {
-  //   fbm.obtenerDocumentoPorID('6YgY9uQRK32YdVZ5KjJB',  (call) => {
-  //     setArregloOfDb(call.trajectory.at(-1).length)
-  //     // setLatitude(call.data().latitude)
-  //     // setLongitude(call.data().longitude)
-  //   })
-  // }, []);
-
-
-
 useEffect(() => {
   setInterval(() => {
     updateMarker()
-  }, 30000)
+  }, 300000)
 },);
 
 
@@ -107,8 +98,10 @@ useEffect(() => {
       <Helmet>
         <title>Mapa Proveedor</title>
     </Helmet>
-      <div style={{height: '90vh', width: '90vw'}} ref={mapRef}>
+      <section className={styles['map-container']}>
+      <div  className={styles.map}  ref={mapRef}>
       </div>
+    </section>
     </>
   );
 };

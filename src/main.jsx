@@ -1,9 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Layout  from './components/Layout.jsx'
+import Layout  from './Layout/Layout.jsx'
 import ReactDOM from 'react-dom/client'
 import ConfirmTravel from "./components/ConfirmTravel.jsx";
 import MapProveedor from "./components/MapProveedor.jsx";
+import 'antd/dist/reset.css'
 import MapCliente from "./components/MapCliente.jsx";
 ReactDOM.createRoot(document.getElementById('root')).render(
 <React.StrictMode>

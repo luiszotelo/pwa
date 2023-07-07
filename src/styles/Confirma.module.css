@@ -1,0 +1,5 @@
+.main__confirma__viaje {
+    height: 90vh;
+    display: grid;
+    place-items: center
+}

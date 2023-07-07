@@ -13,8 +13,6 @@ function ConfirmTravel() {
   const navigate = useNavigate()
   const origin = params.origin.split(',').map( (e) => parseFloat(e) )
   const destiny = params.destiny.split(',').map( (e) => parseFloat(e) )
-  console.log({origin,destiny})
-
   useEffect(() => {
     const trackLocation = () => {
       if (navigator.geolocation) {
@@ -44,9 +42,10 @@ function ConfirmTravel() {
   }
 
   return (
-    <main className={styles['aceptar-viaje']}>
-      <Button  onClick={onClick} type={'primary'}>Aceptar Viaje</Button>
-    </main>
+    <div  className={styles['main__confirma__viaje']}>
+
+      <Button className={styles['aceptar-viaje']}   onClick={onClick} type={'primary'}>Aceptar Viaje</Button>
+    </div>
   )
 }
 

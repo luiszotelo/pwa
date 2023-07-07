@@ -70,7 +70,13 @@ class Firabase {
   };
 
 
-
+  updateStatus = async (id, toChange) => {
+    try {
+      await updateDoc(doc(this.db, "service", id), toChange);
+    } catch (e) {
+      console.error("Error updating document: ", e);
+    }
+  }
 
 }
 

@@ -1,10 +1,13 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useDispatch, useSelector} from 'react-redux'
+import { Button } from 'antd';
 import styles from '../styles/MapProveedor.module.css' 
 import { Helmet } from 'react-helmet';
 import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import { fbm } from "../firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from './LabelMaps.jsx';
+import { setService, updatedArrived } from '../context/slices/serviceSlice.js';
 
 const MapProveedor = () => {
   const [latitude, setLatitude] = useState(0);
@@ -15,6 +18,10 @@ const MapProveedor = () => {
   const map = useRef(null);
   const marker = useRef(null);
   const {idService} = useParams()
+  const dispatch = useDispatch()
+
+  const { arrived, completed } = useSelector(state =>  state.serviceReducer)
+  console.log({arrived, completed})
   useEffect(() => {
     fbm.getService(idService).then(
       service => {
@@ -22,6 +29,7 @@ const MapProveedor = () => {
         setLongitude(service.positionProveedor[0])
         setPositionClient(service.positionClient)
         setPositionFinal(service.positionFinal)
+        dispatch(setService(service)) 
       }
     )
   }, [idService])
@@ -102,8 +110,17 @@ useEffect(() => {
 
 
   const updateMarker = () => {
-    console.log({longitude})
     fbm.updatePoints(idService, {latitude: latitude, longitude: longitude})
+    console.log({longitude, latitude})
+  }
+
+  const updateStatusArrived = () => {
+    // fbm.updateStatus(idService, {arrived: true})
+    dispatch(updateStatusArrived)
+  }
+  const updateStatusCompleted = () => {
+    // fbm.updateStatus(idService, { completed: true })
+    dispatch(updateStatusCompleted)
   }
 
   return (
@@ -115,6 +132,10 @@ useEffect(() => {
       <section className={styles['map-container']}>
       <div  className={styles.map}  ref={mapRef}>
       </div>
+    </section>
+      <section className={styles['buttons']}>
+        <Button type='primary' disabled={completed} onClick={() => dispatch(updatedArrived)}>Confirmar Arrivo</Button>
+        <Button type='primary' danger  disabled={arrived} onClick={()=> dispatch(updateStatusCompleted)}>Finalizar Servicio</Button>
     </section>
     </>
   );

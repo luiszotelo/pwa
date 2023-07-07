@@ -12,3 +12,11 @@
     height: 100%;
     width: 100%;
 }
+
+.buttons {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+}

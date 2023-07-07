@@ -1,4 +1,5 @@
 import styles from '../styles/LabelMaps.module.css'
+// eslint-disable-next-line react/prop-types
 function Label ( {color, label} ) {
   return (
     <>

@@ -3,4 +3,10 @@
 main   {
     /* // gris claro */
     background: #f2f2f2;
+
 } 
+
+html {
+    font-family: 'Montserrat', sans-serif;
+    width: min-content(90%, 1000px);
+}

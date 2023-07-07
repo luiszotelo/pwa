@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import { fbm } from "../firabase/firabase.js";
 import { useParams } from "react-router-dom";
+import LabelMaps from './LabelMaps.jsx';
 
 const MapProveedor = () => {
   const [latitude, setLatitude] = useState(0);
@@ -83,7 +84,7 @@ const MapProveedor = () => {
 
     marker.current?.remove();
 
-    marker.current = new Marker()
+    marker.current = new Marker({color: 'blue'})
       .setLngLat([longitude, latitude])
       .addTo(map.current)
       .setDraggable(true);
@@ -110,6 +111,7 @@ useEffect(() => {
       <Helmet>
         <title>Mapa Proveedor</title>
     </Helmet>
+    <LabelMaps/>
       <section className={styles['map-container']}>
       <div  className={styles.map}  ref={mapRef}>
       </div>

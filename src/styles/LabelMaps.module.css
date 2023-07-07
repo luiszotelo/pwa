@@ -1,0 +1,41 @@
+.ping {
+    width: 15px;
+}
+
+
+.container {
+    display: block;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* margin: 0 auto; */
+    border: 1px solid black;
+    border-radius: 1rem;
+    width: 250px ;
+    padding: 5px;
+    background-color: #d3d3d3;
+}
+
+
+
+
+.label {
+    margin-left: 10px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.label__block {
+    padding: 0.2rem;
+}
+.esquina {
+  position: fixed;
+  top: 1000;
+  right: 10;
+  /* Opcional: Ajusta el tamaño y los márgenes según tus necesidades */
+  width: 200px;
+  height: 200px;
+  margin-top: 10px;
+  margin-right: 10px;
+  z-index: 999;
+}

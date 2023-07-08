@@ -19,9 +19,9 @@ const MapProveedor = () => {
   const marker = useRef(null);
   const {idService} = useParams()
   const dispatch = useDispatch()
+  const [intervalId , setIntervalId] = useState(null)
+  const { completed } =  useSelector(state => state.serviceReducer.service)
 
-  const { arrived, completed } = useSelector(state =>  state.serviceReducer)
-  console.log({arrived, completed})
   useEffect(() => {
     fbm.getService(idService).then(
       service => {
@@ -101,18 +101,20 @@ const MapProveedor = () => {
   }, [latitude, longitude])
 
 // Actuliza la ubicación del proveedor cada 30 segundos
+
 useEffect(() => {
-  setInterval(() => {
-    updateMarker()
-  }, 30000)
-},);
-
-
-// función que actualiza la ubicación del proveedor en la base de datos
-  const updateMarker = () => {
+ const interval = setInterval(() => {
     fbm.updatePoints(idService, {latitude: latitude, longitude: longitude})
     console.log({longitude, latitude})
-  }
+  }, 30000)
+  setIntervalId(interval)
+},[]);
+
+  useEffect(() => {
+    if(completed) {
+      clearInterval(intervalId)
+    }
+  },[completed,intervalId])
 
   return (
     <>
@@ -125,7 +127,7 @@ useEffect(() => {
       </div>
     </section>
       <section className={styles['buttons']}>
-        <Buttons id={ idService} />
+        <Buttons id={ idService}  />
     </section>
     </>
   );

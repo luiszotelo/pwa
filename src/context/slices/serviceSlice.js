@@ -3,8 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   service: {},
-  arrived: false,
-  completed: false,
   
 }
 
@@ -16,11 +14,11 @@ export const serviceSlice = createSlice({
       state.service = action.payload
     },
       updateCompleted: (state) => {
-        state.completed =  true
+        state.service.completed =  true
     },
     updatedArrived: (state) => {
       console.log('arrived')
-      state.arrived =  true 
+      state.service.arrived =  true 
     }
   }
 }) 

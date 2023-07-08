@@ -1,13 +1,13 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector} from 'react-redux'
-import { Button } from 'antd';
 import styles from '../styles/MapProveedor.module.css' 
 import { Helmet } from 'react-helmet';
 import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import { fbm } from "../firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from './LabelMaps.jsx';
-import { setService, updatedArrived } from '../context/slices/serviceSlice.js';
+import { setService } from '../context/slices/serviceSlice.js';
+import Buttons from './Buttons.jsx';
 
 const MapProveedor = () => {
   const [latitude, setLatitude] = useState(0);
@@ -100,7 +100,7 @@ const MapProveedor = () => {
 
   }, [latitude, longitude])
 
-
+// Actuliza la ubicación del proveedor cada 30 segundos
 useEffect(() => {
   setInterval(() => {
     updateMarker()
@@ -108,19 +108,10 @@ useEffect(() => {
 },);
 
 
-
+// función que actualiza la ubicación del proveedor en la base de datos
   const updateMarker = () => {
     fbm.updatePoints(idService, {latitude: latitude, longitude: longitude})
     console.log({longitude, latitude})
-  }
-
-  const updateStatusArrived = () => {
-    // fbm.updateStatus(idService, {arrived: true})
-    dispatch(updateStatusArrived)
-  }
-  const updateStatusCompleted = () => {
-    // fbm.updateStatus(idService, { completed: true })
-    dispatch(updateStatusCompleted)
   }
 
   return (
@@ -134,8 +125,7 @@ useEffect(() => {
       </div>
     </section>
       <section className={styles['buttons']}>
-        <Button type='primary' disabled={completed} onClick={() => dispatch(updatedArrived)}>Confirmar Arrivo</Button>
-        <Button type='primary' danger  disabled={arrived} onClick={()=> dispatch(updateStatusCompleted)}>Finalizar Servicio</Button>
+        <Buttons/>
     </section>
     </>
   );

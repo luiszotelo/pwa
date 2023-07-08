@@ -125,7 +125,7 @@ useEffect(() => {
       </div>
     </section>
       <section className={styles['buttons']}>
-        <Buttons/>
+        <Buttons id={ idService} />
     </section>
     </>
   );

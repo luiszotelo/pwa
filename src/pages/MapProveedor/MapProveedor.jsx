@@ -96,6 +96,7 @@ const MapProveedor = () => {
     const sf = new LngLat(positionFinal[0], positionFinal[1]);
     const sx = new LngLat(longitude, latitude);
     const bounds = new LngLatBounds(sw, sf, sx);
+    map.current.dele
     map.current.fitBounds(bounds, {
       padding: 200,
     });
@@ -108,7 +109,7 @@ const MapProveedor = () => {
     const interval = setInterval(() => {
       dispatch(mvCorrdinates());
       dispatch(updatePoints(idService));
-    }, 9000);
+    }, 30000);
     setIntervalId(interval);
   }, []);
 
@@ -130,7 +131,7 @@ const MapProveedor = () => {
       </section>
 
       <section className={styles["buttons"]}>
-        <ButtonsMapProveedor id={idService} interval={intervalId} />
+        <ButtonsMapProveedor   id={idService} interval={intervalId} />
       </section>
     </>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import mapboxgl, { Map, Marker } from 'mapbox-gl'
-import { fbm } from "../firabase/firabase.js";
+import { fbm } from "../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 
 const MapCliente = () => {

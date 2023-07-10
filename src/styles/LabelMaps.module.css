@@ -30,12 +30,14 @@
 }
 .esquina {
   position: fixed;
-  top: 1000;
-  right: 10;
-  /* Opcional: Ajusta el tamaño y los márgenes según tus necesidades */
-  width: 200px;
-  height: 200px;
-  margin-top: 10px;
-  margin-right: 10px;
-  z-index: 999;
+  top: 100px;
+  right: 100px;
+
+  z-index: 99;
+
+}
+
+.esquina:hover {
+    cursor: pointer;
+    color: blue;
 }

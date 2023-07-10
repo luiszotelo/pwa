@@ -1,2 +1,2 @@
 export * from './confirmarViaje'
-export * from './home'
+export * from './Home' 

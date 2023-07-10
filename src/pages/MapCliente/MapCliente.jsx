@@ -32,7 +32,7 @@ const MapCliente = () => {
       dispatch(setLongitude(service.trajectory[l - 1]?.longitude));
       dispatch(setLatitude(service.trajectory[l - 1]?.latitude));
     });
-  }, [idService]);
+  }, [idService,dispatch]);
 
   useLayoutEffect(() => {
     if (!mapRef.current) return;

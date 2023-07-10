@@ -15,7 +15,7 @@ function ButtonsMapProveedor ( { id , interval}) {
         dispatch(updateCompleted())
         fbm.updateStatus(id, {completed: true})
         clearInterval(interval)
-        navigate('/')
+        // navigate('/')
         
     }
   return (

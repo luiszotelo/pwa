@@ -1,15 +1,18 @@
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import {  useEffect, useLayoutEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
-import mapboxgl, { Map, Marker } from "mapbox-gl";
+import { LngLat, LngLatBounds, Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import styles from './MapCliente.module.css'
 import {
   setLatitude,
   setLongitude,
   setService,
 } from "../../context/slices/serviceSlice";
 import { updatePointService } from "../../context/slices/serviceThunk";
+import LabelMaps from "../../components/LabelMaps";
+import { ButtonAlert } from "../../components/ButtonAlert";
 
 const MapCliente = () => {
   const mapRef = useRef(null);
@@ -17,7 +20,7 @@ const MapCliente = () => {
   const marker = useRef(null);
   const dispatch = useDispatch();
 
-  const { latitude, longitude, loading } = useSelector(
+  const { latitude, longitude, loading, service } = useSelector(
     (state) => state.serviceReducer
   );
 
@@ -33,9 +36,7 @@ const MapCliente = () => {
 
   useLayoutEffect(() => {
     if (!mapRef.current) return;
-    if(loading) return
-    mapboxgl.accessToken =
-      "pk.eyJ1Ijoiem9tYXByb2plY3QiLCJhIjoiY2xqbTlpNmhwMHVwODNjcTl0czh5dnoyeCJ9.zRqxzA3XPV4MIHkawlunwg";
+    if (loading) return;
     map.current = new Map({
       container: mapRef.current, // container ID
       style: "mapbox://styles/mapbox/streets-v12", // style URL
@@ -50,15 +51,24 @@ const MapCliente = () => {
     if (!map.current) return;
     marker.current?.remove();
 
-    marker.current = new Marker()
+    marker.current = new Marker({ color: "blue" })
       .setLngLat([longitude, latitude])
       .addTo(map.current)
       .setDraggable(true);
+    new Marker({ color: "yellow" })
+      .setLngLat(service.positionClient)
+      .addTo(map.current);
+    const pA = new LngLat(service.positionClient[0], service.positionClient[1]);
+    const pb = new LngLat(longitude, latitude);
+    const bounds = new LngLatBounds(pA, pb);
+    map.current.fitBounds(bounds, {
+      padding: 200,
+    });
     // map.current.flyTo({center: [longitude, latitude], zoom: 15})
   }, [latitude, longitude]);
 
   useEffect(() => {
-      dispatch(updatePointService(idService))
+    dispatch(updatePointService(idService));
   }, []);
 
   return (
@@ -66,7 +76,11 @@ const MapCliente = () => {
       <Helmet>
         <title>Mapa Cliente</title>
       </Helmet>
-      <div style={{ height: "90vh", width: "90vw" }} ref={mapRef}></div>
+      <LabelMaps />
+      <section>
+        <div  className={styles['map-cliente']} ref={mapRef}></div>
+        <ButtonAlert idService={idService} idProveedor={service.idCliente}/>
+      </section>
     </>
   );
 };

@@ -2,7 +2,7 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./MapProveedor.module.css";
 import { Helmet } from "react-helmet";
-import mapboxgl, { LngLat, LngLatBounds, Map, Marker } from "mapbox-gl";
+import { LngLat, LngLatBounds, Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from "../../components/LabelMaps.jsx";
@@ -67,8 +67,6 @@ const MapProveedor = () => {
   useLayoutEffect(() => {
     if (!positionClient[0]) return;
     if (!mapRef.current) return;
-    mapboxgl.accessToken =
-      "pk.eyJ1Ijoiem9tYXByb2plY3QiLCJhIjoiY2xqbTlpNmhwMHVwODNjcTl0czh5dnoyeCJ9.zRqxzA3XPV4MIHkawlunwg";
     map.current = new Map({
       container: mapRef.current, // container ID
       style: "mapbox://styles/mapbox/streets-v12", // style URL
@@ -92,11 +90,11 @@ const MapProveedor = () => {
       .addTo(map.current)
       .setDraggable(true);
     // map.current.flyTo({ center: [longitude, latitude], zoom: 15 });
-    const sw = new LngLat(positionClient[0], positionClient[1]);
+    // const sw = new LngLat(positionClient[0], positionClient[1]);
     const sf = new LngLat(positionFinal[0], positionFinal[1]);
     const sx = new LngLat(longitude, latitude);
-    const bounds = new LngLatBounds(sx,sf  );
-    map.current.dele
+    const bounds = new LngLatBounds(sx, sf);
+    map.current.dele;
     map.current.fitBounds(bounds, {
       padding: 200,
     });
@@ -131,7 +129,7 @@ const MapProveedor = () => {
       </section>
 
       <section className={styles["buttons"]}>
-        <ButtonsMapProveedor   id={idService} interval={intervalId} />
+        <ButtonsMapProveedor id={idService} interval={intervalId} />
       </section>
     </>
   );

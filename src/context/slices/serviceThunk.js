@@ -10,7 +10,7 @@ export const updatePoints = (idService) => {
 };
 
 export const updatePointService = (idService) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     try {
       fbm.obtenerDocumentoPorID(idService, (data) => {
         console.log("updatePointService", data);
@@ -24,3 +24,10 @@ export const updatePointService = (idService) => {
     }
   };
 };
+
+
+export const createAlertService = (data) => {
+    return dispatch => {
+      fbm.createAlertService(data)
+    }
+}

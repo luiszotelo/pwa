@@ -8,3 +8,9 @@ header {
 .header__title {
   margin: 0;
 }
+
+
+.service-track {
+  font-size: 1rem;
+  font-weight: 700;
+}

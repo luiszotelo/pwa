@@ -78,6 +78,16 @@ class Firabase {
     }
   }
 
+  async createAlertService(data) {
+    try{
+      const docRef = await addDoc(collection(this.db, "alertService"), data);
+      console.log("Document written with ID: ", docRef);
+      return docRef.id
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
 }
 
 

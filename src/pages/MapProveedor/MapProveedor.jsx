@@ -6,7 +6,8 @@ import mapboxgl, { LngLat, LngLatBounds, Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from "../../components/LabelMaps.jsx";
-import { setLatitude, setLongitude, setService } from "../../context/slices/serviceSlice.js";
+// eslint-disable-next-line no-unused-vars
+import { mvCorrdinates, setLatitude, setLongitude, setService } from "../../context/slices/serviceSlice.js";
 import { ButtonsMapProveedor } from "../../components";
 
 const MapProveedor = () => {
@@ -98,10 +99,11 @@ const MapProveedor = () => {
   useEffect(() => {
     if(!latitude) return
     const interval = setInterval(() => {
+    // dispatch(mvCorrdinates())
       console.log({longitude})
       fbm.updatePoints(idService, { latitude: latitude, longitude: longitude });
       console.log({ longitude, latitude });
-    }, 5000);
+    }, 3000);
     setIntervalId(interval);
   }, []);
 
@@ -110,7 +112,7 @@ const MapProveedor = () => {
       clearInterval(intervalId);
     }
   }, [completed, intervalId, latitude]);
-
+  if(!map.current) return 'Esta mierda no funciona'
   return (
     <>
       <Helmet>

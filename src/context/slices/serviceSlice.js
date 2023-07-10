@@ -25,12 +25,17 @@ export const serviceSlice = createSlice({
     },
     setLongitude: (state, action) => {
       state.longitude = action.payload;
+    },
+    mvCorrdinates: (state) => {
+      state.latitude = state.latitude + 0.0001;
+      state.longitude = state.longitude + 0.0001;
     }
+
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setLatitude, setLongitude, setService, updateCompleted, updatedArrived } =
+export const {mvCorrdinates, setLatitude, setLongitude, setService, updateCompleted, updatedArrived } =
   serviceSlice.actions;
 
 export default serviceSlice.reducer;

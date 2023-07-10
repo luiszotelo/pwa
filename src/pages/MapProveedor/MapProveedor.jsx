@@ -2,16 +2,14 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./MapProveedor.module.css";
 import { Helmet } from "react-helmet";
-import mapboxgl, {  LngLat, LngLatBounds, Map, Marker } from "mapbox-gl";
+import mapboxgl, { LngLat, LngLatBounds, Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from "../../components/LabelMaps.jsx";
-import { setService } from "../../context/slices/serviceSlice.js";
+import { setLatitude, setLongitude, setService } from "../../context/slices/serviceSlice.js";
 import { ButtonsMapProveedor } from "../../components";
 
 const MapProveedor = () => {
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
   const [positionClient, setPositionClient] = useState([0, 0]); // [lng, lat
   const [positionFinal, setPositionFinal] = useState([0, 0]); // [lng, lat
   const mapRef = useRef(null);
@@ -21,7 +19,7 @@ const MapProveedor = () => {
   const dispatch = useDispatch();
   const [intervalId, setIntervalId] = useState(null);
   const { completed } = useSelector((state) => state.serviceReducer.service);
-
+  const { latitude, longitude} = useSelector(state => state.serviceReducer)
   useEffect(() => {
     fbm.getService(idService).then((service) => {
       setLatitude(service.positionProveedor[1]);
@@ -35,14 +33,15 @@ const MapProveedor = () => {
   /*
      Obtiene en tiempo real la ubicación del usuario
    */
+  
   useEffect(() => {
-    if (!map.current) return;
+    // if (!map.current) return;
     const trackLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
           (position) => {
-            setLatitude(position.coords.latitude);
-            setLongitude(position.coords.longitude);
+            dispatch(setLatitude(position.coords.latitude))
+            dispatch(setLongitude(position.coords.longitude))
           },
           (error) => {
             console.log(error);
@@ -52,10 +51,10 @@ const MapProveedor = () => {
         console.log("Geolocation is not supported by this browser.");
       }
     };
-
     trackLocation();
-  }, [latitude, longitude]);
+  }, [latitude, longitude,dispatch]);
   // crear el mapa
+
   useLayoutEffect(() => {
     if (!positionClient[0]) return;
     if (!mapRef.current) return;
@@ -77,10 +76,6 @@ const MapProveedor = () => {
   useEffect(() => {
     if (!map.current) return;
 
-    // setInterval(() => {
-    //   setLongitude(longitude + 0.001)
-    //   setLatitude((prev) => prev + 0.001);
-    // }, 3000)
 
     marker.current?.remove();
 
@@ -89,22 +84,24 @@ const MapProveedor = () => {
       .addTo(map.current)
       .setDraggable(true);
     // map.current.flyTo({ center: [longitude, latitude], zoom: 15 });
-    const sw = new LngLat(positionClient[0],positionClient[1])
-    const sf = new LngLat(positionFinal[0],positionFinal[1])
-    const sx = new LngLat(longitude,latitude)
-    const bounds = new LngLatBounds(sw,sf,sx)
-    map.current.fitBounds(bounds,{
-      padding: 200
-    })
-  }, [latitude, longitude,positionClient,positionFinal]);
+    const sw = new LngLat(positionClient[0], positionClient[1]);
+    const sf = new LngLat(positionFinal[0], positionFinal[1]);
+    const sx = new LngLat(longitude, latitude);
+    const bounds = new LngLatBounds(sw, sf, sx);
+    map.current.fitBounds(bounds, {
+      padding: 200,
+    });
+  }, [latitude, longitude, positionClient, positionFinal]);
 
-  // Actuliza la ubicación del proveedor cada 30 segundos
+  // Actualiza la ubicación del proveedor cada 30 segundos
 
   useEffect(() => {
+    if(!latitude) return
     const interval = setInterval(() => {
+      console.log({longitude})
       fbm.updatePoints(idService, { latitude: latitude, longitude: longitude });
       console.log({ longitude, latitude });
-    }, 30000);
+    }, 5000);
     setIntervalId(interval);
   }, []);
 
@@ -120,9 +117,11 @@ const MapProveedor = () => {
         <title>Mapa Proveedor</title>
       </Helmet>
       <LabelMaps />
+
       <section className={styles["map-container"]}>
         <div className={styles.map} ref={mapRef}></div>
       </section>
+
       <section className={styles["buttons"]}>
         <ButtonsMapProveedor id={idService} interval={intervalId} />
       </section>

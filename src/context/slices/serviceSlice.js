@@ -1,30 +1,36 @@
-import { createSlice } from '@reduxjs/toolkit'
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   service: {},
-  
-}
+  latitude: 0,
+  longitude: 0,
+};
 
 export const serviceSlice = createSlice({
-  name: 'counter',
+  name: "counter",
   initialState,
   reducers: {
     setService: (state, action) => {
-      state.service = action.payload
+      state.service = action.payload;
     },
-      updateCompleted: (state) => {
-        state.service.completed =  true
+    updateCompleted: (state) => {
+      state.service.completed = true;
     },
     updatedArrived: (state) => {
-      console.log('arrived')
-      state.service.arrived =  true 
+      console.log("arrived");
+      state.service.arrived = true;
+    },
+    setLatitude: (state, action) => {
+      state.latitude = action.payload;
+    },
+    setLongitude: (state, action) => {
+      state.longitude = action.payload;
     }
-  }
-}) 
-
+  },
+});
 
 // Action creators are generated for each case reducer function
-export const { setService, updateCompleted, updatedArrived} = serviceSlice.actions
+export const { setLatitude, setLongitude, setService, updateCompleted, updatedArrived } =
+  serviceSlice.actions;
 
-export default serviceSlice.reducer
+export default serviceSlice.reducer;

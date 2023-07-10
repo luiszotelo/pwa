@@ -24,10 +24,10 @@ export const ButtonConfirmPage = ({ latitude, longitude, origin, destiny }) => {
           type={"primary"}
           style={{ marginRight: "1rem" }}
         >
-          Aceptar Viaje
+          Aceptar Servicio
         </Button>
         <Button onClick={handleRechazar} size="large" type={"primary"} danger>
-          Rechazar Viaje
+          Rechazar Servicio
         </Button>
       </section>
     </>

@@ -4,6 +4,7 @@ const initialState = {
   service: {},
   latitude: 0,
   longitude: 0,
+  loading: true,
 };
 
 export const serviceSlice = createSlice({
@@ -12,6 +13,7 @@ export const serviceSlice = createSlice({
   reducers: {
     setService: (state, action) => {
       state.service = action.payload;
+      state.loading = false;
     },
     updateCompleted: (state) => {
       state.service.completed = true;
@@ -27,8 +29,9 @@ export const serviceSlice = createSlice({
       state.longitude = action.payload;
     },
     mvCorrdinates: (state) => {
-      state.latitude = state.latitude + 0.0001;
-      state.longitude = state.longitude + 0.0001;
+      state.latitude = state.latitude + 0.001;
+      state.longitude = state.longitude + 0.001;
+      console.log("mvCorrdinates", state.latitude, state.longitude);
     },
       
   },

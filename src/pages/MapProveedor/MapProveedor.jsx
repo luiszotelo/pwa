@@ -95,7 +95,7 @@ const MapProveedor = () => {
     const sw = new LngLat(positionClient[0], positionClient[1]);
     const sf = new LngLat(positionFinal[0], positionFinal[1]);
     const sx = new LngLat(longitude, latitude);
-    const bounds = new LngLatBounds(sw, sf, sx);
+    const bounds = new LngLatBounds(sx,sf  );
     map.current.dele
     map.current.fitBounds(bounds, {
       padding: 200,
@@ -109,7 +109,7 @@ const MapProveedor = () => {
     const interval = setInterval(() => {
       dispatch(mvCorrdinates());
       dispatch(updatePoints(idService));
-    }, 30000);
+    }, 3000);
     setIntervalId(interval);
   }, []);
 

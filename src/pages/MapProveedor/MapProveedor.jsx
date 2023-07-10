@@ -7,8 +7,14 @@ import { fbm } from "../../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from "../../components/LabelMaps.jsx";
 // eslint-disable-next-line no-unused-vars
-import { mvCorrdinates, setLatitude, setLongitude, setService } from "../../context/slices/serviceSlice.js";
+import {
+  mvCorrdinates,
+  setLatitude,
+  setLongitude,
+  setService,
+} from "../../context/slices/serviceSlice.js";
 import { ButtonsMapProveedor } from "../../components";
+import { updatePoints } from "../../context/slices/serviceThunk";
 
 const MapProveedor = () => {
   const [positionClient, setPositionClient] = useState([0, 0]); // [lng, lat
@@ -20,7 +26,10 @@ const MapProveedor = () => {
   const dispatch = useDispatch();
   const [intervalId, setIntervalId] = useState(null);
   const { completed } = useSelector((state) => state.serviceReducer.service);
-  const { latitude, longitude} = useSelector(state => state.serviceReducer)
+  const { latitude, longitude } = useSelector((state) => state.serviceReducer);
+
+  console.log("redux", latitude);
+
   useEffect(() => {
     fbm.getService(idService).then((service) => {
       setLatitude(service.positionProveedor[1]);
@@ -34,15 +43,14 @@ const MapProveedor = () => {
   /*
      Obtiene en tiempo real la ubicación del usuario
    */
-  
+
   useEffect(() => {
-    // if (!map.current) return;
     const trackLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
           (position) => {
-            dispatch(setLatitude(position.coords.latitude))
-            dispatch(setLongitude(position.coords.longitude))
+            dispatch(setLatitude(position.coords.latitude));
+            dispatch(setLongitude(position.coords.longitude));
           },
           (error) => {
             console.log(error);
@@ -53,7 +61,7 @@ const MapProveedor = () => {
       }
     };
     trackLocation();
-  }, [latitude, longitude,dispatch]);
+  }, [latitude, longitude, dispatch]);
   // crear el mapa
 
   useLayoutEffect(() => {
@@ -77,7 +85,6 @@ const MapProveedor = () => {
   useEffect(() => {
     if (!map.current) return;
 
-
     marker.current?.remove();
 
     marker.current = new Marker({ color: "blue" })
@@ -97,13 +104,11 @@ const MapProveedor = () => {
   // Actualiza la ubicación del proveedor cada 30 segundos
 
   useEffect(() => {
-    if(!latitude) return
+    // if(!latitude) return
     const interval = setInterval(() => {
-    // dispatch(mvCorrdinates())
-      console.log({longitude})
-      fbm.updatePoints(idService, { latitude: latitude, longitude: longitude });
-      console.log({ longitude, latitude });
-    }, 3000);
+      dispatch(mvCorrdinates());
+      dispatch(updatePoints(idService));
+    }, 9000);
     setIntervalId(interval);
   }, []);
 
@@ -112,7 +117,7 @@ const MapProveedor = () => {
       clearInterval(intervalId);
     }
   }, [completed, intervalId, latitude]);
-  if(!map.current) return 'Esta mierda no funciona'
+  // if(!map.current) return 'Esta mierda no funciona'
   return (
     <>
       <Helmet>

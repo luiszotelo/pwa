@@ -29,8 +29,8 @@ export const serviceSlice = createSlice({
     mvCorrdinates: (state) => {
       state.latitude = state.latitude + 0.0001;
       state.longitude = state.longitude + 0.0001;
-    }
-
+    },
+      
   },
 });
 

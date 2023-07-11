@@ -1,5 +1,15 @@
 import { initializeApp } from "firebase/app";
-import {getFirestore, onSnapshot, doc,addDoc, collection ,  updateDoc, getDoc}  from 'firebase/firestore';
+import {
+  getFirestore,
+  onSnapshot,
+  query,
+  doc,
+  addDoc,
+  collection,
+  updateDoc,
+  getDoc,
+  where,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBdaB4Pf_OBopQpMHuPYvBsnh3pqKy6m-k",
@@ -9,50 +19,61 @@ const firebaseConfig = {
   storageBucket: "prueba-firebase-a957d.appspot.com",
   messagingSenderId: "381566866117",
   appId: "1:381566866117:web:fcf2c6a7a38449dbae96ac",
-  measurementId: "G-0S9RZZXLJL"
+  measurementId: "G-0S9RZZXLJL",
 };
 
 // Initialize Firebase
 
-let fb = null
+let fb = null;
 class Firabase {
   constructor(config) {
     if (!fb) {
-      this.app = initializeApp(config)
-      this.db = getFirestore(this.app)
+      this.app = initializeApp(config);
+      this.db = getFirestore(this.app);
     }
   }
 
   async createService(data) {
     try {
       const docRef = await addDoc(collection(this.db, "service"), data);
-      return docRef.id
+      return docRef.id;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   }
 
-  async getService (id) {
+  async getService(id) {
     try {
       const querySnapshot = await getDoc(doc(this.db, "service", id));
-      return querySnapshot.data()
-    } catch(e){
+      return querySnapshot.data();
+    } catch (e) {
       console.error("Error getting document: ", e);
     }
   }
   async updatePoints(id, newPoints) {
     try {
       // const data = this.getService(id).data().trajectory
-      const s = await this.getService(id)
-      await updateDoc(doc(this.db, "service", id), {trajectory:[...s.trajectory,newPoints] });
+      const s = await this.getService(id);
+      await updateDoc(doc(this.db, "service", id), {
+        trajectory: [...s.trajectory, newPoints],
+      });
       // updateDoc(doc(db, "tasks", id), newFields);
     } catch (e) {
       console.error("Error updating document: ", e);
     }
   }
 
+  async updateStatusAlert(id) {
+    try {
+      await updateDoc(doc(this.db, "serviceAlert", id), {
+        atendida: true,
+      });
+    } catch (e) {
+      console.error("Error updating document: ", e);
+    }
+  }
 
-  obtenerDocumentoPorID =  async  (documentoID, callback) => {
+  obtenerDocumentoPorID = async (documentoID, callback) => {
     const documentRef = await doc(this.db, "service", documentoID);
 
     const unsubscribe = await onSnapshot(documentRef, (doc) => {
@@ -76,19 +97,33 @@ class Firabase {
     } catch (e) {
       console.error("Error updating document: ", e);
     }
-  }
+  };
 
   async createAlertService(data) {
-    try{
+    try {
       const docRef = await addDoc(collection(this.db, "alertService"), data);
       console.log("Document written with ID: ", docRef);
-      return docRef.id
+      return docRef.id;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   }
 
+  async observarAlert(callback) {
+    const q  = query(collection(this.db, "alertService"), where("atendida", "==", false));
+    const unsubscribe = await onSnapshot(q,(querySnapshot)=> {
+      const alerts = [];
+      querySnapshot.forEach(doc =>  {
+        console.log(doc.id)
+        alerts.push({id: doc.id,...doc.data()})
+      })
+      callback(alerts)
+    })
+    return unsubscribe
+  }
+
+
+
 }
 
-
-export const fbm = new Firabase(firebaseConfig)
+export const fbm = new Firabase(firebaseConfig);

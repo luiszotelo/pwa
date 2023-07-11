@@ -27,6 +27,7 @@ export const updatePointService = (idService) => {
 
 
 export const createAlertService = (data) => {
+    // eslint-disable-next-line no-unused-vars
     return dispatch => {
       fbm.createAlertService(data)
     }

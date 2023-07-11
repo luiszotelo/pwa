@@ -1,3 +1,22 @@
-.map-cabina {
-    color: blue;
+.btn-notificacion {
+    padding: 2rem;
+}
+.number__notification {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50%;
+    font-weight: bold;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 1.5rem; */
+    /* height: 1.5rem; */
+    box-shadow: 0 0 0 0.1rem #fff;
+    animation: pulse 1.5s infinite;
 }

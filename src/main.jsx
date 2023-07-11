@@ -7,11 +7,11 @@ import MapProveedor from "./pages/MapProveedor/MapProveedor.jsx";
 import "antd/dist/reset.css";
 import "./index.css";
 import mapboxgl from "mapbox-gl";
-import { ConfirmarViaje, Home } from "./pages/index.js";
+import { ConfirmarViaje, Home, MapCabina } from "./pages/index.js";
 import MapCliente from "./pages/MapCliente/MapCliente.jsx";
 
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoiem9tYXByb2plY3QiLCJhIjoiY2xqbTlpNmhwMHVwODNjcTl0czh5dnoyeCJ9.zRqxzA3XPV4MIHkawlunwg";
+mapboxgl.accessToken =import.meta.env.VITE_ACCESS_TOKEN_MB
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
@@ -27,6 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             element={<MapProveedor />}
           />
           <Route path="/travel/cliente/:idService" element={<MapCliente />} />
+          <Route path="/map/cabina" element={<MapCabina />} />
         </Route>
       </Routes>
     </BrowserRouter>

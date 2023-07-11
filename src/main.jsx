@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./context/store/store.js";
@@ -13,6 +14,8 @@ import MapCliente from "./pages/MapCliente/MapCliente.jsx";
 mapboxgl.accessToken =import.meta.env.VITE_ACCESS_TOKEN_MB
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
@@ -32,4 +35,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       </Routes>
     </BrowserRouter>
   </Provider>
+  </React.StrictMode>
 );

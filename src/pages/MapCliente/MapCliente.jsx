@@ -58,13 +58,13 @@ const MapCliente = () => {
     new Marker({ color: "yellow" })
       .setLngLat(service.positionClient)
       .addTo(map.current);
-    const pA = new LngLat(service.positionClient[0], service.positionClient[1]);
-    const pb = new LngLat(longitude, latitude);
-    const bounds = new LngLatBounds(pA, pb);
-    map.current.fitBounds(bounds, {
-      padding: 200,
-    });
-    // map.current.flyTo({center: [longitude, latitude], zoom: 15})
+    // const pA = new LngLat(service.positionClient[0], service.positionClient[1]);
+    // const pb = new LngLat(longitude, latitude);
+    // const bounds = new LngLatBounds(pA, pb);
+    // map.current.fitBounds(bounds, {
+    //   padding: 200,
+    // });
+    map.current.flyTo({center: [longitude, latitude], zoom: 15})
   }, [latitude, longitude]);
 
   useEffect(() => {

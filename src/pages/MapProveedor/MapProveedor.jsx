@@ -49,8 +49,8 @@ const MapProveedor = () => {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
           (position) => {
-            dispatch(setLatitude(position.coords.latitude));
-            dispatch(setLongitude(position.coords.longitude));
+            dispatch(setLatitude(position.coords?.latitude));
+            dispatch(setLongitude(position.coords?.longitude));
           },
           (error) => {
             console.log(error);
@@ -89,15 +89,13 @@ const MapProveedor = () => {
       .setLngLat([longitude, latitude])
       .addTo(map.current)
       .setDraggable(true);
-    // map.current.flyTo({ center: [longitude, latitude], zoom: 15 });
-    // const sw = new LngLat(positionClient[0], positionClient[1]);
-    const sf = new LngLat(positionFinal[0], positionFinal[1]);
-    const sx = new LngLat(longitude, latitude);
-    const bounds = new LngLatBounds(sx, sf);
-    map.current.dele;
-    map.current.fitBounds(bounds, {
-      padding: 200,
-    });
+    map.current.flyTo({ center: [longitude, latitude], zoom: 15 });
+    // const sf = new LngLat(positionFinal[0], positionFinal[1]);
+    // const sx = new LngLat(-99.150579, 19.3321405);
+    // const bounds = new LngLatBounds( ).extend({lat: latitude, lng: longitude}).extend({lat: positionClient[1], lng:positionClient[0]})
+    // map.current.fitBounds(bounds, {
+    //   padding: 200,
+    // });
   }, [latitude, longitude, positionClient, positionFinal]);
 
   // Actualiza la ubicación del proveedor cada 30 segundos

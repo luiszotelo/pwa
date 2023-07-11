@@ -1,10 +1,10 @@
 {
-  "name": "pwa-vite-config",
+  "name": "hola",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3000 --open",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -13,7 +13,7 @@
     "@ant-design/icons": "^5.1.4",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.6.4",
-    "firebase": "^9.23.0",
+    "firebase": "^10.0.0",
     "mapbox-gl": "^2.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

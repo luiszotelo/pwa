@@ -7,9 +7,13 @@
     "words": [
         "antd",
         "Corrdinates",
+        "direccion",
+        "Escotel",
+        "firestore",
         "notificacion",
         "reduxjs",
-        "serv"
+        "serv",
+        "Sigsa"
     ],
     "ignoreWords": [],
     "import": []

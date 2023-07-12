@@ -1,5 +1,6 @@
 import { Card } from "antd";
-export const InfoService = () => {
+const styles = {color: '#0071bc'}
+export const InfoService = ( { direccionDestino, direccionOrigen }) => {
   return (
     <Card
       title="Información del Servicio"
@@ -7,9 +8,11 @@ export const InfoService = () => {
         width: 300,
       }}
     >
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
+      <h2 style={styles}>Dirección Origen</h2>
+      <p>{direccionOrigen}</p>
+
+      <h2 style={styles}>Dirección Destino</h2>
+      <p>{direccionDestino}</p>
     </Card>
   );
 };

@@ -1,13 +1,11 @@
-import { useState } from "react";
 import { useLayoutEffect } from "react";
 import { AlertsCabina } from "./AlertsCabina";
 import { useRef } from "react";
-import { Map, Marker } from "mapbox-gl";
+import { Map} from "mapbox-gl";
 import { useEffect } from "react";
-import { fbm } from "../../services/firabase/firabase";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // import { setServicesActive } from "../../context/slices/cabinaSlice";
-import { createMarkers, fillMarker} from "../../context/slices/cabinaThunks";
+import { createMarkers} from "../../context/slices/cabinaThunks";
 const MapCabina = () => {
   const mapRef = useRef(null);
   const map = useRef(null);

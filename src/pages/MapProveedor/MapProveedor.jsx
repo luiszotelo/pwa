@@ -2,13 +2,12 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./MapProveedor.module.css";
 import { Helmet } from "react-helmet";
-import {  Map, Marker } from "mapbox-gl";
+import { Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from "../../components/LabelMaps.jsx";
 // eslint-disable-next-line no-unused-vars
 import {
-  mvCorrdinates,
   setLatitude,
   setLongitude,
   setService,
@@ -38,7 +37,7 @@ const MapProveedor = () => {
       setPositionFinal(service.positionFinal);
       dispatch(setService(service));
     });
-  }, [idService]);
+  }, [idService,dispatch]);
 
   /*
      Obtiene en tiempo real la ubicación del usuario
@@ -73,7 +72,7 @@ const MapProveedor = () => {
       center: [longitude, latitude], // starting position [lng, lat]
       zoom: 15, // starting zoom
     });
-    new Marker({ color: "yellow" })
+    new Marker({ color: "orange" })
       .setLngLat(positionClient)
       .addTo(map.current);
 
@@ -90,12 +89,6 @@ const MapProveedor = () => {
       .addTo(map.current)
       .setDraggable(true);
     map.current.flyTo({ center: [longitude, latitude], zoom: 15 });
-    // const sf = new LngLat(positionFinal[0], positionFinal[1]);
-    // const sx = new LngLat(-99.150579, 19.3321405);
-    // const bounds = new LngLatBounds( ).extend({lat: latitude, lng: longitude}).extend({lat: positionClient[1], lng:positionClient[0]})
-    // map.current.fitBounds(bounds, {
-    //   padding: 200,
-    // });
   }, [latitude, longitude, positionClient, positionFinal]);
 
   // Actualiza la ubicación del proveedor cada 30 segundos
@@ -107,7 +100,7 @@ const MapProveedor = () => {
       dispatch(updatePoints(idService));
     }, 3000);
     setIntervalId(interval);
-  }, [idService,dispatch]);
+  }, [idService, dispatch]);
 
   useEffect(() => {
     if (completed) {

@@ -9,17 +9,18 @@ import {
   updateDoc,
   getDoc,
   where,
+  setDoc,
 } from "firebase/firestore";
-
+console.log(import.meta.env.VITE_ID_DB);
 const firebaseConfig = {
-  apiKey: "AIzaSyBdaB4Pf_OBopQpMHuPYvBsnh3pqKy6m-k",
-  authDomain: "prueba-firebase-a957d.firebaseapp.com",
-  databaseURL: "https://prueba-firebase-a957d-default-rtdb.firebaseio.com",
-  projectId: "prueba-firebase-a957d",
-  storageBucket: "prueba-firebase-a957d.appspot.com",
-  messagingSenderId: "381566866117",
-  appId: "1:381566866117:web:fcf2c6a7a38449dbae96ac",
-  measurementId: "G-0S9RZZXLJL",
+  apiKey: import.meta.env.VITE_API_KEY_FB,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_DATABASE_URL,
+  projectId: import.meta.env.VITE_ID_DB,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -33,10 +34,18 @@ class Firabase {
     }
   }
 
-  async createService(data) {
+  async createService(ideService, data) {
+    //find service with idService
+    //if exist return id
+    //else create new service
     try {
-      const docRef = await addDoc(collection(this.db, "service"), data);
-      return docRef.id;
+      const doc2 = doc(this.db, "service", `${ideService}`);
+      const d = await getDoc(doc2);
+      if (d.exists()) {
+        return d.id;
+      }
+      await setDoc(doc(collection(this.db, "service"), `${ideService}`), data);
+      return ideService;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -45,7 +54,7 @@ class Firabase {
   async getService(id) {
     try {
       const querySnapshot = await getDoc(doc(this.db, "service", id));
-      return querySnapshot.data();
+      return querySnapshot.data()
     } catch (e) {
       console.error("Error getting document: ", e);
     }
@@ -64,7 +73,7 @@ class Firabase {
   }
 
   async updateStatusAlert(id) {
-    console.log(id)
+    console.log(id);
     try {
       await updateDoc(doc(this.db, "alertService", id), {
         atendida: true,
@@ -91,7 +100,6 @@ class Firabase {
     return unsubscribe;
   };
 
-
   updateStatus = async (id, toChange) => {
     try {
       await updateDoc(doc(this.db, "service", id), toChange);
@@ -111,30 +119,34 @@ class Firabase {
   }
 
   async observarAlert(callback) {
-    const q  = query(collection(this.db, "alertService"), where("atendida", "==", false));
-    const unsubscribe = await onSnapshot(q,(querySnapshot)=> {
+    const q = query(
+      collection(this.db, "alertService"),
+      where("atendida", "==", false)
+    );
+    const unsubscribe = await onSnapshot(q, (querySnapshot) => {
       const alerts = [];
-      querySnapshot.forEach(doc =>  {
-        alerts.push({id: doc.id,...doc.data()})
-      })
-      callback(alerts)
-    })
-    return unsubscribe
+      querySnapshot.forEach((doc) => {
+        alerts.push({ id: doc.id, ...doc.data() });
+      });
+      callback(alerts);
+    });
+    return unsubscribe;
   }
 
   async observarServices(callback) {
-    const q  = query(collection(this.db, "service"), where("completed", "==", false));
-    const unsubscribe = await onSnapshot(q,(querySnapshot)=> {
+    const q = query(
+      collection(this.db, "service"),
+      where("completed", "==", false)
+    );
+    const unsubscribe = await onSnapshot(q, (querySnapshot) => {
       const services = [];
-      querySnapshot.forEach(doc =>  {
-        services.push({id: doc.id,...doc.data()})
-      })
-      callback(services)
-    })
-    return unsubscribe
+      querySnapshot.forEach((doc) => {
+        services.push({ id: doc.id, ...doc.data() });
+      });
+      callback(services);
+    });
+    return unsubscribe;
   }
-
-
 }
 
 export const fbm = new Firabase(firebaseConfig);

@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import styles from "./Confirma.module.css";
-import {  useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { InfoService } from "../../components/InfoService";
 import { ButtonConfirmPage } from "../../components/ButtonConfirmPage";
+import { getServiceApi } from "../../context/slices/serviceThunk";
+import { useParams } from "react-router-dom";
 
 function ConfirmTravel() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const dispatch = useDispatch();
   const params = useParams();
-  const origin = params.origin.split(",").map((e) => parseFloat(e));
-  const destiny = params.destiny.split(",").map((e) => parseFloat(e));
+  const { idService } = params;
+  // hace el primer track de la ubicación
   useEffect(() => {
     const trackLocation = () => {
       if (navigator.geolocation) {
@@ -30,15 +33,27 @@ function ConfirmTravel() {
     trackLocation();
   }, [latitude, longitude]);
 
+  const {
+    serviceApiSigsa: s, 
+    serviceApiSigsaStatus,
+  } = useSelector((state) => state.serviceReducer);
+
+  useEffect(() => {
+    dispatch(getServiceApi(idService));
+  }, [dispatch,idService]);
+
+  if (serviceApiSigsaStatus === "loading") return <h1>Cargando...</h1>;
   return (
     <>
       <div className={styles["main__confirma__viaje"]}>
-        <InfoService />
+        <InfoService  direccionDestino={s.direccionDestino} direccionOrigen={s.direccionOrigen} />
+         
         <ButtonConfirmPage
+          idService={idService}
           latitude={latitude}
           longitude={longitude}
-          origin={origin}
-          destiny={destiny}
+          origin={[s.lngDestino, s.latOrigen]}
+          destiny={[s.lngDestino, s.latDestino]}
         />
       </div>
     </>

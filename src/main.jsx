@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route
-            path="/confirm/:origin/:destiny"
+            path="/confirm/travel/:idService"
             element={<ConfirmarViaje />}
           />
           <Route

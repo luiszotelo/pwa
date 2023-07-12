@@ -23,9 +23,10 @@ function LabelMaps() {
         width={300}
       >
         <article >
-          <Label color={"red"} label={"Ubicación Cliente"} />
+
           <Label color={"blue"} label={"Ubicación Proveedor"} />
-          <Label color={"yellow"} label={"Destino"} />
+          <Label color={"orange"} label={"Ubicación Cliente"} />
+          <Label color={"red"} label={"Destino Final"} />
         </article>
       </Modal>
     </>

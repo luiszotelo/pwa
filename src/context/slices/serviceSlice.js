@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getServiceApi } from "./serviceThunk";
 
 const initialState = {
   service: {},
   latitude: 0,
   longitude: 0,
   loading: true,
+  serviceApiSigsa: {},
+  serviceApiSigsaStatus: 'loading' 
 };
 
 export const serviceSlice = createSlice({
@@ -35,6 +38,23 @@ export const serviceSlice = createSlice({
     },
       
   },
+  extraReducers(builder){
+    builder 
+    .addCase(getServiceApi.pending, (state, action) => {
+        state.serviceApiSigsa = action.payload
+        state.serviceApiSigsaStatus = 'loading'
+    }
+    )
+    .addCase(getServiceApi.fulfilled, (state, action) => {
+        state.serviceApiSigsa = action.payload
+        state.serviceApiSigsaStatus = 'success'
+    }
+    )
+
+
+  }
+
+  
 });
 
 // Action creators are generated for each case reducer function

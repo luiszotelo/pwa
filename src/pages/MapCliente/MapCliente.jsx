@@ -43,6 +43,10 @@ const MapCliente = () => {
       center: [longitude, latitude], // starting position [lng, lat]
       zoom: 15, // starting zoom
     });
+
+    new Marker({ color: "orange" })
+      .setLngLat(service.positionClient)
+      .addTo(map.current);
   }, [loading]);
 
   useEffect(() => {
@@ -53,9 +57,6 @@ const MapCliente = () => {
       .setLngLat([longitude, latitude])
       .addTo(map.current)
       .setDraggable(true);
-    new Marker({ color: "yellow" })
-      .setLngLat(service.positionClient)
-      .addTo(map.current);
 
     // const bounds = [[service.positionClient[0], service.positionClient[1]], [longitude,latitude]]
     // map.current.fitBounds(bounds, {
@@ -71,12 +72,12 @@ const MapCliente = () => {
   return (
     <>
       <Helmet>
-        <title>Mapa Cliente</title>
+        <title>Cliente</title>
       </Helmet>
       <LabelMaps />
       <section>
         <div className={styles["map-cliente"]} ref={mapRef}></div>
-        <ButtonAlert idService={idService} idProveedor={service.idCliente} />
+        <ButtonAlert idService={idService} idProveedor={service.idServicio} />
       </section>
     </>
   );

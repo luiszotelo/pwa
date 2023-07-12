@@ -10,3 +10,17 @@ html {
     font-family: 'Montserrat', sans-serif;
     width: min-content(90%, 1000px);
 }
+
+.maker-link {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 500;
+    /* margin: 0 0.5rem; */
+    border: none;
+}
+
+.maker-link:hover {
+    color: #000;
+    text-decoration: underline;
+}

@@ -10,6 +10,7 @@ import { useState } from "react";
 export const ButtonAlert = ({ idService, idProveedor }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  console.log({ idService, idProveedor });
   const onClick = () => {
     dispatch(
       createAlertService(new AlertService(idService, idProveedor).toJSon())

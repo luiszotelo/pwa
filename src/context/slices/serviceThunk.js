@@ -1,3 +1,4 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fbm } from "../../services/firabase/firabase";
 import { setLatitude, setLongitude,setService } from "./serviceSlice";
 
@@ -32,3 +33,21 @@ export const createAlertService = (data) => {
       fbm.createAlertService(data)
     }
 }
+
+// export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
+//     const response = await axios.get(BASE_URL)
+//     console.log(response.data)
+//     return response?.data
+// })
+
+export const getServiceApi = createAsyncThunk('service/getService', async (id) => {
+  try {
+    const response = await fetch(`https://dev-sigsa.backend.escotel.mx/api/tracking/GetServicio/${id}`)
+    const data = await response.json()
+    return data
+    
+  } catch (error) {
+    console.log(error) 
+  }
+} 
+)

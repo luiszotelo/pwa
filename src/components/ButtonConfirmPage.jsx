@@ -3,12 +3,25 @@ import { fbm } from "../services/firabase/firabase";
 import { useNavigate } from "react-router-dom";
 import { Service } from "../models/service";
 
-export const ButtonConfirmPage = ({ latitude, longitude, origin, destiny }) => {
+export const ButtonConfirmPage = ({
+  latitude,
+  longitude,
+  origin,
+  destiny,
+  idService,
+}) => {
   const navigate = useNavigate();
   const onClick = () => {
-    const service = new Service(2, 2, [longitude, latitude], origin, destiny, {latitude,longitude});
+    const service = new Service(
+      idService,
+      [longitude, latitude],
+      origin,
+      destiny,
+      [{ latitude, longitude }]
+    );
+    console.log(service.toJSON());
     fbm
-      .createService(service.toJSON())
+      .createService(idService, service.toJSON())
       .then((idService) => navigate(`/travel/proveedor/${idService}`));
   };
 

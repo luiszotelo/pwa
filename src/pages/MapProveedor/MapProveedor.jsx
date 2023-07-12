@@ -2,7 +2,7 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./MapProveedor.module.css";
 import { Helmet } from "react-helmet";
-import { LngLat, LngLatBounds, Map, Marker } from "mapbox-gl";
+import {  Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from "../../components/LabelMaps.jsx";
@@ -103,11 +103,11 @@ const MapProveedor = () => {
   useEffect(() => {
     // if(!latitude) return
     const interval = setInterval(() => {
-      dispatch(mvCorrdinates());
+      // dispatch(mvCorrdinates());
       dispatch(updatePoints(idService));
     }, 3000);
     setIntervalId(interval);
-  }, []);
+  }, [idService,dispatch]);
 
   useEffect(() => {
     if (completed) {

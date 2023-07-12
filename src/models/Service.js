@@ -1,5 +1,5 @@
 export class Service {
-  constructor(idServicio, idCliente,positionProveedor, positionClient, positionFinal ) {
+  constructor(idServicio, idCliente,positionProveedor, positionClient, positionFinal, trajectory ) {
     this.idProveedor = idServicio
     this.idCliente = idCliente
     this.timeArrived =  null
@@ -9,7 +9,7 @@ export class Service {
     this.positionClient = positionClient
     this.positionFinal = positionFinal
     this.completed = false
-    this.trayectory =[]
+    this.trayectory = trajectory
   }
   toJSON(){
     return {
@@ -23,7 +23,7 @@ export class Service {
       positionProveedor: this.positionProveedor,
       positionClient: this.positionClient,
       positionFinal: this.positionFinal,
-      trajectory: [],
+      trajectory: this.trayectory 
     }
   }
 }

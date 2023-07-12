@@ -1,10 +1,10 @@
-import {  useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
-import {  Map, Marker } from "mapbox-gl";
+import { Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styles from './MapCliente.module.css'
+import styles from "./MapCliente.module.css";
 import {
   setLatitude,
   setLongitude,
@@ -32,7 +32,7 @@ const MapCliente = () => {
       dispatch(setLongitude(service.trajectory[l - 1]?.longitude));
       dispatch(setLatitude(service.trajectory[l - 1]?.latitude));
     });
-  }, [idService,dispatch]);
+  }, [idService, dispatch]);
 
   useLayoutEffect(() => {
     if (!mapRef.current) return;
@@ -43,8 +43,6 @@ const MapCliente = () => {
       center: [longitude, latitude], // starting position [lng, lat]
       zoom: 15, // starting zoom
     });
-    // new Marker()
-    // 	.setLngLat([service.positionClient[0], service.positionClient[1]])
   }, [loading]);
 
   useEffect(() => {
@@ -58,18 +56,17 @@ const MapCliente = () => {
     new Marker({ color: "yellow" })
       .setLngLat(service.positionClient)
       .addTo(map.current);
-    // const pA = new LngLat(service.positionClient[0], service.positionClient[1]);
-    // const pb = new LngLat(longitude, latitude);
-    // const bounds = new LngLatBounds(pA, pb);
+
+    // const bounds = [[service.positionClient[0], service.positionClient[1]], [longitude,latitude]]
     // map.current.fitBounds(bounds, {
     //   padding: 200,
     // });
-    map.current.flyTo({center: [longitude, latitude], zoom: 15})
-  }, [latitude, longitude]);
+    map.current.flyTo({ center: [longitude, latitude], zoom: 13 });
+  }, [latitude, longitude, service.positionClient]);
 
   useEffect(() => {
     dispatch(updatePointService(idService));
-  }, []);
+  }, [idService,dispatch]);
 
   return (
     <>
@@ -78,8 +75,8 @@ const MapCliente = () => {
       </Helmet>
       <LabelMaps />
       <section>
-        <div  className={styles['map-cliente']} ref={mapRef}></div>
-        <ButtonAlert idService={idService} idProveedor={service.idCliente}/>
+        <div className={styles["map-cliente"]} ref={mapRef}></div>
+        <ButtonAlert idService={idService} idProveedor={service.idCliente} />
       </section>
     </>
   );

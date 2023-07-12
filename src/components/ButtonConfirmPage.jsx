@@ -6,7 +6,7 @@ import { Service } from "../models/service";
 export const ButtonConfirmPage = ({ latitude, longitude, origin, destiny }) => {
   const navigate = useNavigate();
   const onClick = () => {
-    const service = new Service(2, 2, [longitude, latitude], origin, destiny);
+    const service = new Service(2, 2, [longitude, latitude], origin, destiny, {latitude,longitude});
     fbm
       .createService(service.toJSON())
       .then((idService) => navigate(`/travel/proveedor/${idService}`));

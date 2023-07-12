@@ -1,54 +1,42 @@
-import { Button, Drawer, Alert } from "antd";
-import { BellOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import styles from "./MapCabina.module.css";
+import { useLayoutEffect } from "react";
+import { AlertsCabina } from "./AlertsCabina";
+import { useRef } from "react";
+import { Map, Marker } from "mapbox-gl";
 import { useEffect } from "react";
 import { fbm } from "../../services/firabase/firabase";
 import { useDispatch, useSelector } from "react-redux";
-import { setAlerts } from "../../context/slices";
-
+// import { setServicesActive } from "../../context/slices/cabinaSlice";
+import { createMarkers, fillMarker} from "../../context/slices/cabinaThunks";
 const MapCabina = () => {
-  const [open, setOpen] = useState(false);
+  const mapRef = useRef(null);
+  const map = useRef(null);
+  // const marker = useRef(null);
+
   const dispatch = useDispatch();
-  const { alerts } = useSelector((state) => state.mapReducer);
-  
+
   useEffect(() => {
-    fbm.observarAlert((data) => dispatch(setAlerts(data)));
+    // if(!map.current) return
+    dispatch(createMarkers(map.current))
   }, [dispatch]);
-  const onClick = () => {
-    fbm.updateStatusAlert()
-  }
+  useLayoutEffect(() => {
+    if (!mapRef.current) return;
+    map.current = new Map({
+      container: mapRef.current, // container ID
+      style: "mapbox://styles/mapbox/streets-v12", // style URL
+      center: [-99.1332, 19.4326],
+      zoom: 15,
+    });
+    const boundsMexico = [
+      [-118.599, 32.534],
+      [-86.71, 14.55],
+    ];
+    map.current.fitBounds(boundsMexico, { padding: 20 });
+  }, []);
   return (
     <>
-      <Button
-        icon={<BellOutlined />}
-        size="large"
-        className={styles["btn-notificacion"]}
-        onClick={() => setOpen(true)}
-      >
-        <span className={styles["number__notification"]}>1</span>
-      </Button>
-      <Drawer
-        open={open}
-        title="Notificaciones"
-        placement="right"
-        onClose={() => setOpen(false)}
-      >
-        {alerts.map((alert) => (
-          <Alert
-          key={alert.idProveedor}
-            message="Error Text"
-            showIcon
-            description={`El usuario  ha emitido una alerta de pánico`}
-            type="warning"
-            action={
-              <Button size="small" type="primary" onClick={onClick}>
-                Aceptar
-              </Button>
-            }
-          />
-        ))}
-      </Drawer>
+      <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}></div>
+      <AlertsCabina />
     </>
   );
 };

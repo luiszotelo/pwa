@@ -20,3 +20,19 @@
     box-shadow: 0 0 0 0.1rem #fff;
     animation: pulse 1.5s infinite;
 }
+
+.btn-alerts {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    z-index: 999;
+}
+
+
+.card-alert {
+    margin-bottom: 1rem;
+}
+
+.card-alert:last-of-type{
+    margin-bottom: 0;
+}

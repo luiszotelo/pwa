@@ -64,8 +64,9 @@ class Firabase {
   }
 
   async updateStatusAlert(id) {
+    console.log(id)
     try {
-      await updateDoc(doc(this.db, "serviceAlert", id), {
+      await updateDoc(doc(this.db, "alertService", id), {
         atendida: true,
       });
     } catch (e) {
@@ -114,7 +115,6 @@ class Firabase {
     const unsubscribe = await onSnapshot(q,(querySnapshot)=> {
       const alerts = [];
       querySnapshot.forEach(doc =>  {
-        console.log(doc.id)
         alerts.push({id: doc.id,...doc.data()})
       })
       callback(alerts)
@@ -122,6 +122,17 @@ class Firabase {
     return unsubscribe
   }
 
+  async observarServices(callback) {
+    const q  = query(collection(this.db, "service"), where("completed", "==", false));
+    const unsubscribe = await onSnapshot(q,(querySnapshot)=> {
+      const services = [];
+      querySnapshot.forEach(doc =>  {
+        services.push({id: doc.id,...doc.data()})
+      })
+      callback(services)
+    })
+    return unsubscribe
+  }
 
 
 }

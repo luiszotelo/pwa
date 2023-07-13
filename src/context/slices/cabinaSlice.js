@@ -4,7 +4,8 @@ const initialState = {
     alerts: [],
     servicesActive: [],
     markers: [],
-    markersInMap: []
+    markersInMap: [],
+    serviceIdsArray: []
 }
 
 export const cabinaSlice = createSlice({
@@ -22,12 +23,15 @@ export const cabinaSlice = createSlice({
     },
     setMarkersInMap: (state, action) =>{
       state.markersInMap = [...state.markersInMap, action.payload] 
+    },
+    setServicesIdsArray: (state, action) => {
+      state.serviceIdsArray = action.payload
     }
   },
 })
 
 
 
-export const {setAlerts, setServicesActive, setMarkers, setMarkersInMap} = cabinaSlice.actions
+export const {setServicesIdsArray,setAlerts, setServicesActive, setMarkers, setMarkersInMap} = cabinaSlice.actions
 
 export default cabinaSlice.reducer

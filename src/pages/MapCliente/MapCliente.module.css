@@ -10,3 +10,13 @@
     right: 30px;
     z-index: 999;
 }
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    z-index: 999;
+}

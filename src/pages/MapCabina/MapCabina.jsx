@@ -1,11 +1,10 @@
 import { useLayoutEffect } from "react";
-import { AlertsCabina } from "./AlertsCabina";
 import { useRef } from "react";
 import { Map} from "mapbox-gl";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-// import { setServicesActive } from "../../context/slices/cabinaSlice";
 import { createMarkers} from "../../context/slices/cabinaThunks";
+import { StuffCabina } from "./StuffCabina";
 const MapCabina = () => {
   const mapRef = useRef(null);
   const map = useRef(null);
@@ -34,7 +33,7 @@ const MapCabina = () => {
   return (
     <>
       <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}></div>
-      <AlertsCabina />
+      <StuffCabina map={map}/>
     </>
   );
 };

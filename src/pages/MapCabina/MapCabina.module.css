@@ -36,3 +36,12 @@
 .card-alert:last-of-type{
     margin-bottom: 0;
 }
+
+
+.select-types {
+    position: fixed;
+    top: 50px;
+    left: 20px;
+    z-index: 999;
+    width: 100px;
+}

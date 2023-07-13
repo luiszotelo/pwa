@@ -4,6 +4,7 @@ import { Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "antd";
 import styles from "./MapCliente.module.css";
 import {
   setLatitude,

@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { AlertOutlined } from "@ant-design/icons";
+import { AlertOutlined, MessageOutlined } from "@ant-design/icons";
 import styles from "../pages/MapCliente/MapCliente.module.css";
 import { useDispatch } from "react-redux";
 import { createAlertService } from "../context/slices/serviceThunk";
@@ -15,19 +15,28 @@ export const ButtonAlert = ({ idService, idProveedor }) => {
     dispatch(
       createAlertService(new AlertService(idService, idProveedor).toJSon())
     );
-    setIsOpen(false)
+    setIsOpen(false);
   };
   return (
     <>
-      <Button
-        className={styles["btn-alert"]}
-        onClick={() => setIsOpen(true)}
-        type="primary"
-        danger
-        icon={<AlertOutlined />}
-      >
-        Alerta de auxilio
-      </Button>
+      <div className={styles.buttons}>
+        <Button
+          onClick={() => setIsOpen(true)}
+          type="primary"
+          danger
+          icon={<AlertOutlined />}
+        >
+          Alerta de auxilio
+        </Button>
+
+        <Button
+          type="primary"
+          danger
+          icon={<MessageOutlined /> }
+        >
+          Enviar ubicación por sms
+        </Button>
+      </div>
       <Modal
         title={"Enviar una alerta"}
         open={isOpen}

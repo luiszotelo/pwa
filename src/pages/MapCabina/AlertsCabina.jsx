@@ -38,10 +38,10 @@ export const AlertsCabina = () => {
         {alerts.map((alert) => (
           <Alert
             key={alert.id}
-            message="Alerta Pánico"
+            message="Alerta  de pánico"
             showIcon
             className={styles["card-alert"]}
-            description={`El usuario  ha emitido una alerta de pánico`}
+            description={`El usuario  ha emitido una alerta de pánico (idCliente: ${alert.idService})`}
             type="warning"
             action={
               <Button size="small" type="primary"  onClick={() => handleUpdate(alert.id)}>

@@ -1,5 +1,5 @@
 import { Marker, Popup } from "mapbox-gl";
-import { setMarkers, setMarkersInMap } from "./cabinaSlice";
+import { setMarkers, setMarkersInMap, setServicesIdsArray } from "./cabinaSlice";
 import { fbm } from "../../services/firabase/firabase";
 // import { useNavigate } from "react-router-dom";
 
@@ -33,8 +33,12 @@ export const showMarkers = (map) => {
 };
 
 const markers = [];
+let subscribe = null;
+
+let subscribe2 = null;
 export const createMarkers = (map) => {
   // eslint-disable-next-line no-unused-vars
+  if(subscribe2) subscribe2()
   return (dispatch) => {
     fbm.observarServices((service) => {
       if (markers.length > 0) markers.forEach((marker) => marker.remove());
@@ -57,7 +61,36 @@ export const createMarkers = (map) => {
         marker.addTo(map);
         marker.setPopup(popup);
         markers.push(marker);
+        const  ids = service.map(s => ({label: s.idServicio, value: s.idServicio}))
+        dispatch(setServicesIdsArray(ids))
       });
-    });
+    })
+
+  };
+};
+
+export const filterByService = (map, id) => {
+  return (dispatch) => {
+    // if(subscribe) subscribe();
+    console.log("filterByService", id);
+   subscribe2 = fbm.obtenerDocumentoPorID(id,(service) => {
+      if (markers.length > 0) markers.forEach((marker) => marker.remove());
+      const marker = new Marker();
+      const popup = new Popup({
+        offset: 25,
+        closeButton: false,
+        closeOnClick: false,
+      }).setHTML( ` <a  class='maker-link' id='a'  target="_blank" href='/travel/cliente/${service.id}'>Observar Servicio</a>
+                      <br>
+                            Asistencia id: ${service.idServicio} <br>
+                      `);
+      marker.setLngLat([
+        service.trajectory[service.trajectory.length - 1].longitude,
+        service.trajectory[service.trajectory.length - 1].latitude,
+      ]);
+      marker.addTo(map);
+      marker.setPopup(popup);
+      markers.push(marker);
+    }, id);
   };
 };

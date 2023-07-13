@@ -2,13 +2,14 @@ import { useDispatch } from "react-redux";
 import { Select } from "antd";
 import styles from "./MapCabina.module.css";
 import { useSelector } from "react-redux";
-import { filterByService } from "../../context/slices/cabinaThunks";
+import { filterByService, showMarker } from "../../context/slices/cabinaThunks";
 export const SelectCabina = ( { map }) => {
   const { serviceIdsArray } = useSelector(state => state.cabinaReducer)
   const dispatch = useDispatch()
   const handleChange = (value) => {
-    if(!value) return 
-    console.log(`selected ${value}`);
+    if(!value)  {
+      showMarker(map.current)
+    }
     dispatch(filterByService(map.current,value))
   };
   return (
@@ -16,6 +17,7 @@ export const SelectCabina = ( { map }) => {
       <div className={styles["select-types"]}>
         <Select
           // mode=""
+          showSearch
           allowClear
           style={{
             width:  200 

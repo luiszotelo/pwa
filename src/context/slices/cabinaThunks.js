@@ -92,3 +92,9 @@ export const filterByService = (map, id) => {
     }, id);
   };
 };
+
+export const showMarker = (map ) => {
+  markers.forEach(element => {
+    element.addTo(map)
+  });
+} 

@@ -8,12 +8,11 @@ import { StuffCabina } from "./StuffCabina";
 const MapCabina = () => {
   const mapRef = useRef(null);
   const map = useRef(null);
-  // const marker = useRef(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if(!map.current) return
+    if(!map.current) return
     dispatch(createMarkers(map.current))
   }, [dispatch]);
   useLayoutEffect(() => {

@@ -42,7 +42,8 @@ function ConfirmTravel() {
     dispatch(getServiceApi(idService));
   }, [dispatch,idService]);
 
-  if (serviceApiSigsaStatus === "loading") return <h1>Cargando...</h1>;
+  if (serviceApiSigsaStatus === "loading") return <h1 style={{textAlign: 'center'}}>Cargando...</h1>;
+  if(serviceApiSigsaStatus === 'failed' ) return  <h2 style={{textAlign: 'center'}}>Error al cargar el servicio</h2>
   return (
     <>
       <div className={styles["main__confirma__viaje"]}>

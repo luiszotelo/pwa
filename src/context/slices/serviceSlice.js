@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getServiceApi } from "./serviceThunk";
+import { getServiceApi, shareLocation } from "./serviceThunk";
 
 const initialState = {
   service: {},
@@ -7,7 +7,8 @@ const initialState = {
   longitude: 0,
   loading: true,
   serviceApiSigsa: {},
-  serviceApiSigsaStatus: 'loading' 
+  serviceApiSigsaStatus: "loading",
+  message: '',
 };
 
 export const serviceSlice = createSlice({
@@ -36,29 +37,44 @@ export const serviceSlice = createSlice({
       state.longitude = state.longitude + 0.001;
       console.log("mvCorrdinates", state.latitude, state.longitude);
     },
-      
   },
-  extraReducers(builder){
-    builder 
-    .addCase(getServiceApi.pending, (state, action) => {
-        state.serviceApiSigsa = action.payload
-        state.serviceApiSigsaStatus = 'loading'
-    }
-    )
-    .addCase(getServiceApi.fulfilled, (state, action) => {
-        state.serviceApiSigsa = action.payload
-        state.serviceApiSigsaStatus = 'success'
-    }
-    )
+  extraReducers(builder) {
+    builder
+      .addCase(getServiceApi.pending, (state, action) => {
+        state.serviceApiSigsa = action.payload;
+        state.serviceApiSigsaStatus = "loading";
+      })
+      .addCase(getServiceApi.rejected, (state) => {
+        state.serviceApiSigsaStatus = "failed";
+      })
+      .addCase(getServiceApi.fulfilled, (state, action) => {
+        state.serviceApiSigsa = action.payload;
+        state.serviceApiSigsaStatus = "success";
+      })
+      .addCase(shareLocation.pending, (state) => {
+        state.message = 'loading'
+      }
+      )
+      .addCase(shareLocation.rejected, (state) => {
+        state.message = "failed";
+      }
+      )
+      .addCase(shareLocation.fulfilled, (state) => {
+        state.message = 'Ubicación compartida correctamente';
+      }
+      );
 
-
-  }
-
-  
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const {mvCorrdinates, setLatitude, setLongitude, setService, updateCompleted, updatedArrived } =
-  serviceSlice.actions;
+export const {
+  mvCorrdinates,
+  setLatitude,
+  setLongitude,
+  setService,
+  updateCompleted,
+  updatedArrived,
+} = serviceSlice.actions;
 
 export default serviceSlice.reducer;

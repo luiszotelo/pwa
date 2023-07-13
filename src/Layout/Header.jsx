@@ -4,7 +4,7 @@ function Header () {
     <header >
         <img src="https://www.escotel.com.mx/images/logo.png" alt="logo" />
 
-        <h1 className={styles['header__title']}>Service <span className={styles['service-track']}>Track</span></h1>
+        <h1 className={styles['header__title']}>Service <span className={styles['service-track']}>Tracking</span></h1>
     </header>
   )
 }

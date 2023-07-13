@@ -7,14 +7,15 @@ export const SelectCabina = ( { map }) => {
   const { serviceIdsArray } = useSelector(state => state.cabinaReducer)
   const dispatch = useDispatch()
   const handleChange = (value) => {
-    if(!value.length) return 
-    dispatch(filterByService(map.current,value[0]))
+    if(!value) return 
+    console.log(`selected ${value}`);
+    dispatch(filterByService(map.current,value))
   };
   return (
     <>
       <div className={styles["select-types"]}>
         <Select
-          mode="multiple"
+          // mode=""
           allowClear
           style={{
             width:  200 

@@ -39,6 +39,9 @@ export default defineConfig({
         enabled: true,
         /* other options */
       },
+      workbox: {
+        runtimeCaching: []
+      }
     }),
   ],
 });

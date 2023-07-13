@@ -33,12 +33,9 @@ export const showMarkers = (map) => {
 };
 
 const markers = [];
-let subscribe = null;
 
-let subscribe2 = null;
 export const createMarkers = (map) => {
   // eslint-disable-next-line no-unused-vars
-  if(subscribe2) subscribe2()
   return (dispatch) => {
     fbm.observarServices((service) => {
       if (markers.length > 0) markers.forEach((marker) => marker.remove());
@@ -70,10 +67,11 @@ export const createMarkers = (map) => {
 };
 
 export const filterByService = (map, id) => {
+  // eslint-disable-next-line no-unused-vars
   return (dispatch) => {
     // if(subscribe) subscribe();
     console.log("filterByService", id);
-   subscribe2 = fbm.obtenerDocumentoPorID(id,(service) => {
+   fbm.obtenerDocumentoPorID(id,(service) => {
       if (markers.length > 0) markers.forEach((marker) => marker.remove());
       const marker = new Marker();
       const popup = new Popup({

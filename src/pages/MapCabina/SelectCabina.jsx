@@ -9,6 +9,7 @@ export const SelectCabina = ( { map }) => {
   const handleChange = (value) => {
     if(!value)  {
       showMarker(map.current)
+      return
     }
     dispatch(filterByService(map.current,value))
   };

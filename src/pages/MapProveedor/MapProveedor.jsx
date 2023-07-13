@@ -6,6 +6,7 @@ import { Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase.js";
 import { useParams } from "react-router-dom";
 import LabelMaps from "../../components/LabelMaps.jsx";
+import { mvCorrdinates } from "../../context/slices/serviceSlice.js";
 // eslint-disable-next-line no-unused-vars
 import {
   setLatitude,
@@ -37,7 +38,7 @@ const MapProveedor = () => {
       setPositionFinal(service.positionFinal);
       dispatch(setService(service));
     });
-  }, [idService,dispatch]);
+  }, [idService, dispatch]);
 
   /*
      Obtiene en tiempo real la ubicación del usuario
@@ -88,7 +89,10 @@ const MapProveedor = () => {
       .setLngLat([longitude, latitude])
       .addTo(map.current)
       .setDraggable(true);
-    map.current.flyTo({ center: [longitude, latitude], zoom: 15 });
+    // map.current.flyTo({ center: [longitude, latitude], zoom: 15 });
+    // map.current.fitBounds([[longitude, latitude], positionClient], {
+    //   padding: 200,
+    // });
   }, [latitude, longitude, positionClient, positionFinal]);
 
   // Actualiza la ubicación del proveedor cada 30 segundos
@@ -96,9 +100,9 @@ const MapProveedor = () => {
   useEffect(() => {
     // if(!latitude) return
     const interval = setInterval(() => {
-      // dispatch(mvCorrdinates());
+      dispatch(mvCorrdinates());
       dispatch(updatePoints(idService));
-    }, 3000);
+    }, 30000);
     setIntervalId(interval);
   }, [idService, dispatch]);
 

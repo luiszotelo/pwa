@@ -2,10 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from "antd";
 import { updateCompleted, updatedArrived } from '../context/slices/serviceSlice.js';
 import { fbm } from '../services/firabase/firabase.js';
-import { useNavigate } from 'react-router-dom';
 function ButtonsMapProveedor ( { id , interval}) {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const { arrived, completed } = useSelector(state => state.serviceReducer.service)
     const onClickUpdateArrive = () => {
         dispatch(updatedArrived())

@@ -33,12 +33,27 @@ export const showMarkers = (map) => {
 };
 
 const markers = [];
+const copyMarkers = [] 
+let markerfilter =  null
+export const showMarker = (map ) => {
+  markerfilter.remove()
+  markers.forEach(element => {
+    element.addTo(map)
+  });
+} 
+
+export const cleanMarkers = () => {
+  markers.forEach((element) => {
+    element.remove();
+    });
+}
 
 export const createMarkers = (map) => {
   // eslint-disable-next-line no-unused-vars
   return (dispatch) => {
     fbm.observarServices((service) => {
-      if (markers.length > 0) markers.forEach((marker) => marker.remove());
+      if (markers.length > 0) cleanMarkers(map) 
+      console.log('makerObserver', markers)
       service.forEach((serv) => {
         const marker = new Marker();
         const popup = new Popup({
@@ -58,6 +73,7 @@ export const createMarkers = (map) => {
         marker.addTo(map);
         marker.setPopup(popup);
         markers.push(marker);
+        
         const  ids = service.map(s => ({label: s.idServicio, value: s.idServicio}))
         dispatch(setServicesIdsArray(ids))
       });
@@ -72,7 +88,7 @@ export const filterByService = (map, id) => {
     // if(subscribe) subscribe();
     console.log("filterByService", id);
    fbm.obtenerDocumentoPorID(id,(service) => {
-      if (markers.length > 0) markers.forEach((marker) => marker.remove());
+      if (markers.length > 0) cleanMarkers() 
       const marker = new Marker();
       const popup = new Popup({
         offset: 25,
@@ -88,13 +104,8 @@ export const filterByService = (map, id) => {
       ]);
       marker.addTo(map);
       marker.setPopup(popup);
-      markers.push(marker);
+      markerfilter = marker
+      console.log('makerObserver', markers)
     }, id);
   };
 };
-
-export const showMarker = (map ) => {
-  markers.forEach(element => {
-    element.addTo(map)
-  });
-} 

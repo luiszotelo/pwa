@@ -9,7 +9,7 @@ import {
 import { AlertService } from "../models/Alert";
 import { Modal } from "antd";
 import { useState } from "react";
-export const ButtonAlert = ({ idService, idProveedor }) => {
+export const ButtonsAlertCliente = ({ idService, idProveedor }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isNumeroOpen, setIsNumeroOpen] = useState(false);

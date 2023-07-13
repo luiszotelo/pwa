@@ -1,19 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { MessageOutlined } from "@ant-design/icons";
+import { Map, Marker } from "mapbox-gl";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
-import { Map, Marker } from "mapbox-gl";
-import { fbm } from "../../services/firabase/firabase";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./MapCliente.module.css";
+import { useParams } from "react-router-dom";
+import { NewModal } from "../../components";
+import { ButtonsAlertCliente } from "../../components/ButtonAlert";
+import LabelMaps from "../../components/LabelMaps";
 import {
   setLatitude,
   setLongitude,
   setService,
 } from "../../context/slices/serviceSlice";
 import { updatePointService } from "../../context/slices/serviceThunk";
-import LabelMaps from "../../components/LabelMaps";
-import { ButtonAlert } from "../../components/ButtonAlert";
+import { fbm } from "../../services/firabase/firabase";
+import styles from "./MapCliente.module.css";
+import { ButtonsCliente } from "../../components/ButtonsCliente";
 
 const MapCliente = () => {
   const mapRef = useRef(null);
@@ -68,8 +71,11 @@ const MapCliente = () => {
 
   useEffect(() => {
     dispatch(updatePointService(idService));
-  }, [idService,dispatch]);
+  }, [idService, dispatch]);
 
+  const handleOk = () => {
+    console.log("ok");
+  };
   return (
     <>
       <Helmet>
@@ -77,8 +83,8 @@ const MapCliente = () => {
       </Helmet>
       <LabelMaps />
       <section>
-        <div className={styles["map-cliente"]} ref={mapRef}></div>
-        <ButtonAlert idService={idService} idProveedor={service.idServicio} />
+        {/* <div className={styles["map-cliente"]} ref={mapRef}></div> */}
+        <ButtonsCliente/>
       </section>
     </>
   );

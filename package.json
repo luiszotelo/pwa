@@ -1,10 +1,10 @@
 {
   "name": "hola",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite  --port 5000 --open",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

@@ -20,7 +20,7 @@ const MapCabina = () => {
     map.current = new Map({
       container: mapRef.current, // container ID
       style: "mapbox://styles/mapbox/streets-v12", // style URL
-      center: [-99.1332, 19.4326],
+      // center: [-99.1332, 19.4326],
       zoom: 15,
     });
     const boundsMexico = [

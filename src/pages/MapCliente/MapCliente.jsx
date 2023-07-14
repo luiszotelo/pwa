@@ -73,18 +73,16 @@ const MapCliente = () => {
     dispatch(updatePointService(idService));
   }, [idService, dispatch]);
 
-  const handleOk = () => {
-    console.log("ok");
-  };
   return (
     <>
       <Helmet>
         <title>Cliente</title>
       </Helmet>
       <LabelMaps />
-      <section>
+      <section className={'fixed bottom-3 left-3  bg-orange-400'}>
         {/* <div className={styles["map-cliente"]} ref={mapRef}></div> */}
-        <ButtonsCliente/>
+
+        <ButtonsCliente />
       </section>
     </>
   );

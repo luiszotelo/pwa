@@ -1,6 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./MapProveedor.module.css";
 import { Helmet } from "react-helmet";
 import { Map, Marker } from "mapbox-gl";
 import { fbm } from "../../services/firabase/firabase.js";
@@ -93,6 +92,12 @@ const MapProveedor = () => {
     // map.current.fitBounds([[longitude, latitude], positionClient], {
     //   padding: 200,
     // });
+    const element = marker.current.getElement();
+    console.log(element);
+    element.style.backgroundImage = "url('/public/images/crane-truck.png')";
+    element.style.width = `100px`;
+    element.style.backgroundSize="cover"
+    element.style.display="block"
   }, [latitude, longitude, positionClient, positionFinal]);
 
   // Actualiza la ubicación del proveedor cada 30 segundos
@@ -100,7 +105,7 @@ const MapProveedor = () => {
   useEffect(() => {
     // if(!latitude) return
     const interval = setInterval(() => {
-      dispatch(mvCorrdinates());
+      // dispatch(mvCorrdinates());
       dispatch(updatePoints(idService));
     }, 30000);
     setIntervalId(interval);
@@ -119,11 +124,10 @@ const MapProveedor = () => {
       </Helmet>
       <LabelMaps />
 
-      <section className={styles["map-container"]}>
-        <div className={styles.map} ref={mapRef}></div>
+      <section>
+        <div className="h-screen w-screen" ref={mapRef}></div>
       </section>
-
-      <section className={styles["buttons"]}>
+      <section className="fixed z-50 bottom-14 left-1/2 right-1/2 grid  place-content-center ">
         <ButtonsMapProveedor id={idService} interval={intervalId} />
       </section>
     </>

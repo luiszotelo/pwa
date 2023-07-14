@@ -28,7 +28,6 @@ export const ButtonsCliente = ({ idProveedor, idService }) => {
       <NewModal
         btnType={"primary"}
         textBtn={"Ver información del servicio"}
-        classPosition={"btn-info-service"}
         modalTitle={"Información del servicio"}
         icon={<InfoCircleOutlined />}
         handleOk={handleOk}
@@ -39,7 +38,6 @@ export const ButtonsCliente = ({ idProveedor, idService }) => {
         btnType={"primary"}
         textBtn={"Compartir ubicación"}
         icon={<MessageOutlined />}
-        classPosition={"btn-share-location"}
         modalTitle={"Compartir ubicación"}
         handleOk={handleMessage}
         footer={{}}
@@ -48,7 +46,6 @@ export const ButtonsCliente = ({ idProveedor, idService }) => {
       <NewModal
         btnType={"primary"}
         textBtn={"Enviar alerta de auxilio"}
-        // classPosition={"btn-alert"}
         icon={<AlertOutlined />}
         modalTitle={"Alerta de auxilio"}
         handleOk={handleSendAlert}

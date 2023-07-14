@@ -49,6 +49,7 @@ export const ButtonsAlertCliente = ({ idService, idProveedor }) => {
       {contextHolder}
       <div className={styles.buttons}>
         <Button
+
           onClick={() => setIsOpen(true)}
           type="primary"
           danger

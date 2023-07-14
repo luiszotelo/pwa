@@ -6,10 +6,10 @@ function Layout() {
   return (
     <>
       <Header />
-      <main>
+      <main className="h-screen w-screen ">
         <Outlet />
+        <Footer/>
       </main>
-      <Footer />
     </>
   );
 }

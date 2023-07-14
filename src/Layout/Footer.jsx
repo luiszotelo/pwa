@@ -1,8 +1,7 @@
-import styles from '../styles/Footer.module.css' 
 function Footer () {
   return (
     <footer>
-        <p className={styles['p__footer']}>Todos los derechos reservados</p>
+        <p className='fixed bottom-0 z-30' >Escotel todos los derechos reservados</p>
     </footer>
   )
 }

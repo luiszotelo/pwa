@@ -17,10 +17,12 @@ function ButtonsMapProveedor ( { id , interval}) {
         
     }
   return (
-    <>
-        <Button type='primary' disabled={arrived} onClick={onClickUpdateArrive}>Confirmar Arribo</Button>
-        <Button type='primary' danger  disabled={!arrived || completed} onClick={onClickUpdateCompleted}>Finalizar Servicio</Button>
-    </>
+// 
+// 
+    <div className='flex gap-3 '>
+        <Button  type='primary' disabled={arrived} size='large'  className='bg-sky-500' onClick={onClickUpdateArrive}>Confirmar Arribo</Button>
+        <Button type='primary' disabled={!arrived || completed} onClick={onClickUpdateCompleted} size='large' danger   >Finalizar Servicio</Button>
+    </div>
   )
 }
 

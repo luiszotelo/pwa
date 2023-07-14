@@ -5,7 +5,6 @@ import { store } from "./context/store/store.js";
 import Layout from "./Layout/Layout.jsx";
 import ReactDOM from "react-dom/client";
 import MapProveedor from "./pages/MapProveedor/MapProveedor.jsx";
-import "antd/dist/reset.css";
 import "./index.css";
 import mapboxgl from "mapbox-gl";
 import { ConfirmarViaje, Home, MapCabina } from "./pages/index.js";

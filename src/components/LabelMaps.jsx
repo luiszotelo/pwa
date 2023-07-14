@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styles from "../styles/LabelMaps.module.css";
 import Label from "./Label.jsx";
 import { Modal } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
@@ -12,7 +11,7 @@ function LabelMaps() {
   return (
     <>
     <Tooltip title='Información pings'>
-      <InfoCircleOutlined  style={{fontSize:"30px"}} className={styles.esquina} onClick={onClick} />
+      <InfoCircleOutlined  style={{fontSize:"30px"}} className={'fixed top-5 left-5 z-40'} onClick={onClick} />
 
     </Tooltip>
       <Modal
@@ -22,11 +21,8 @@ function LabelMaps() {
         onCancel={onClick}
         width={300}
       >
-        <article >
-
-          <Label color={"blue"} label={"Ubicación Proveedor"} />
-          <Label color={"orange"} label={"Ubicación Cliente"} />
-          <Label color={"red"} label={"Destino Final"} />
+        <article  className="">
+          <Label  />
         </article>
       </Modal>
     </>
